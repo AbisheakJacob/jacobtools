@@ -2,6 +2,6 @@
 # in stead of from ppack.functions import average
 
 from .decorators import singleton
-from .functions import listChunker, report, weirdCase
+from .db import createdb, dropdb, listdb, createtb, readtb, listtb
 
 

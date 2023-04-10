@@ -4,18 +4,18 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='toolbox',
-    version='0.0.3',
-    author='Mike Huls',
-    author_email='mike_huls@hotmail.com',
-    description='Testing installation of Package',
+    name='jacobtools',
+    version='0.0.0',
+    author='Abisheak Jacob J',
+    author_email='abisheakjacob0032@gmail.com',
+    description='my package',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='https://github.com/Muls/toolbox',
+    url='https://github.com/AbisheakJacob/jacobtools',
     project_urls = {
         "Bug Tracker": "https://github.com/Muls/toolbox/issues"
     },
     license='MIT',
-    packages=['toolbox'],
-    install_requires=['requests'],
+    packages=['jacobtools'],
+    install_requires=['pandas', 'psycopg2', 'sqlalchemy', 'warnings'],
 )
