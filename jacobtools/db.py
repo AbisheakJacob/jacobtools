@@ -5,8 +5,7 @@ import psycopg2
 import sqlalchemy
 from sqlalchemy import create_engine
 
-import warnings
-warnings.filterwarnings("ignore")
+
 # defining the create database function
 
 def createdb(database_name):
