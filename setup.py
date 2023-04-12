@@ -17,5 +17,5 @@ setuptools.setup(
     },
     license='MIT',
     packages=['jacobtools'],
-    install_requires=['pandas', 'psycopg2', 'sqlalchemy', 'more-itertools','collections'],
+    install_requires=['pandas', 'psycopg2', 'sqlalchemy', 'more-itertools'],
 )
