@@ -3,5 +3,6 @@
 
 from .decorators import singleton
 from .db import createdb, dropdb, listdb, createtb, readtb, listtb
+from .it import combo
 
 
