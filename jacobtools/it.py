@@ -13,7 +13,7 @@ def combo(df_data, column_name, groupby_column, combo_no):
     # column_name - the column that you wish to create the combinations along a pivot
     # creating a dataframe along the groupby column where the combination column will form a list
     
-    new_data = df_data.groupby(groupby_column)[column_name].agg[list].reset_index()
+    new_data = df_data.groupby(groupby_column)[column_name].agg(list).reset_index()
     
     
     # creating a new column all-combinations that contains all the combinations of the items as per the combo_no
