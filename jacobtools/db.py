@@ -1,5 +1,6 @@
 # import the libraries
 from sqlalchemy import create_engine, inspect
+import pandas as pd
 
 
 # defining the parameters for the database connection as global variables
@@ -17,7 +18,7 @@ def infodb(host, user, passw, dbname):
     username = str(user)
     password = str(passw)
     databasename = str(dbname)
-    databaseurl = f'mysql://{username}:{password}@{hostname}/{databasename  }'
+    databaseurl = "mysql://" + user + ":" + password + "@" + host + "/" + databasename
 
 
 # defining the create table from pandas dataframe
@@ -99,7 +100,7 @@ def infodb(host, user, passw, dbname):
 
 
 # defining the list all tables in the database function
-def listtb(database_name):
+def listtb():
     
     try:
         # Create a SQLAlchemy engine to connect to the database
@@ -112,7 +113,7 @@ def listtb(database_name):
         table_names = inspector.get_table_names()
 
         # return the table names
-        return table_names
+        return pd.DataFrame(table_names)
 
     except Exception as e:
 
