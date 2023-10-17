@@ -38,3 +38,12 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Database module (db.py)
+
+### infodb(hostname, username, password, databasename)
+The infodb function takes in the database credentials and stores them as global variables, that can be used in by other functions.
+- This function also creates the database URL that can be used by SQLAlchemy module (only for MySQL databases)
+
+### listtb()
+The listtb function provides the list of all the tables in the given database.
