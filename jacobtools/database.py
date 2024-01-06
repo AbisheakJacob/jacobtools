@@ -31,6 +31,7 @@ def infodb(host, user, passw, dbname):
     databasename = str(dbname)
     databaseurl = "mysql://" + user + ":" + password + "@" + host + "/" + databasename
 
+    return print("The database url is: " + databaseurl)
 
 # defining the list all tables in the database function
 def listtb():

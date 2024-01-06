@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name='jacobtools',
-    version='0.0.9',
+    version='0.0.10',
     author='Abisheak Jacob J',
     author_email='abisheakjacob0032@gmail.com',
     description='my package',
@@ -17,5 +17,5 @@ setuptools.setup(
     },
     license='MIT',
     packages=['jacobtools'],
-    install_requires=['pandas', 'psycopg2', 'sqlalchemy', 'more-itertools'],
+    install_requires=['pandas', 'sqlalchemy'],
 )
