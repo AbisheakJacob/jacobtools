@@ -12,7 +12,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/AbisheakJacob/jacobtools',
-    project_urls = {
+    project_urls={
         "Bug Tracker": "https://github.com/Muls/toolbox/issues"
     },
     license='MIT',
