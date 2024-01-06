@@ -1,10 +1,10 @@
 # import the libraries
-from sqlalchemy import create_engine, inspect
+from sqlalchemy import create_engine, inspect, MetaData, Table
 import pandas as pd
 
 
 # defining the parameters for the database connection as global variables
-def infodb(host, user, passw, dbname):
+def infodb(host, user, passw, dbname, show_url=False):
     # write a docstring for this function
     """
     This function is used to define the parameters for the database connection as global variables.
@@ -31,7 +31,9 @@ def infodb(host, user, passw, dbname):
     databasename = str(dbname)
     databaseurl = "mysql://" + user + ":" + password + "@" + host + "/" + databasename
 
-    print(f"The database url is: {databaseurl}")
+    # if show_url is True then print the database url
+    if show_url:
+        print(f"The database url is: {databaseurl}")
 
 # defining the list all tables in the database function
 def listtb():
@@ -66,6 +68,10 @@ def uploadtb(df, tbname):
     :param tbname: object
     :return:
     """
+
+    # convert the table name to string
+    tbname = str(tbname)
+
     try:
         # Create a SQLAlchemy engine to connect to the database
         engine = create_engine(databaseurl)
@@ -89,6 +95,10 @@ def downloadtb(tbname):
     :param tbname: object
     :return:
     """
+
+    # convert the table name to string
+    tbname = str(tbname)
+
     try:
         # Create a SQLAlchemy engine to connect to the database
         engine = create_engine(databaseurl)
@@ -102,7 +112,7 @@ def downloadtb(tbname):
     except Exception as e:
 
         # if error return the error
-        return str(e)
+        print(str(e))
 
 
 # delete a table from the database
@@ -112,15 +122,22 @@ def deletetb(tbname):
     :param tbname: object
     :return:
     """
+
+    # convert the table name to string
+    tbname = str(tbname)
+
     try:
         # Create a SQLAlchemy engine to connect to the database
         engine = create_engine(databaseurl)
 
-        # connect to the engine
-        connection = engine.connect()
+        # Create a MetaData object
+        metadata = MetaData()
 
-        # delete the table from the database
-        connection.execute("DROP TABLE " + tbname)
+        # Reflect the existing table
+        existing_table = Table(tbname, metadata, autoload_with=engine)
+
+        # Drop the table
+        existing_table.drop(engine, checkfirst=True)
 
         # return a success message
         return "Table deleted successfully"
