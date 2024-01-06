@@ -1,8 +1,8 @@
-# Toolbox
+# jacobtools
 
-Toolbox is a Python package that contains handy functions. 
+**jacobtools** is a Python package that contains handy functions. 
 It's main goal, however, is to demonstrate how to create a package.  
-Check out [this](https://mikehuls.medium.com/create-your-custom-python-package-that-you-can-pip-install-from-your-git-repository-f90465867893)
+
 article for a detailed explanation on how to create your 
 custom Python package that is installable from your GitHub repo!
 
@@ -22,19 +22,8 @@ Features:
 
 #### Demo of some of the features:
 ```python
-import toolbox
-from toolbox import report
-
-message = toolbox.functions.weirdCase("The toolbox package is ready for use")
-report(message)
-
-list_of_numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-for chunk in toolbox.functions.listChunker(lst=list_of_numbers, csize=3):
-    print(chunk)
+import jacobtools
 ```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
@@ -47,3 +36,6 @@ The infodb function takes in the database credentials and stores them as global 
 
 ### listtb()
 The listtb function provides the list of all the tables in the given database.
+
+***The Reference to this library can be found here:***
+Check out [this](https://mikehuls.medium.com/create-your-custom-python-package-that-you-can-pip-install-from-your-git-repository-f90465867893)

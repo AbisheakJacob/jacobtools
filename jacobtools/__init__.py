@@ -1,8 +1,8 @@
 # This is so that you can import ppack or import average from ppack
-# in stead of from ppack.functions import average
+# instead of from ppack.functions import average
 
 from .decorators import singleton
-from .db import infodb, listtb
+from .database import infodb, listtb, uploadtb, downloadtb, deletetb
 from .it import combo
 from .pa import fheader
 
