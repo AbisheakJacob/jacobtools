@@ -1,8 +1,10 @@
+# %%
 # import the libraries
 from sqlalchemy import create_engine, inspect, MetaData, Table
 import pandas as pd
 
 
+# %%
 # defining the parameters for the database connection as global variables
 def infodb(host, user, passw, dbname, show_url=False):
     # write a docstring for this function
@@ -35,6 +37,7 @@ def infodb(host, user, passw, dbname, show_url=False):
     if show_url:
         print(f"The database url is: {databaseurl}")
 
+# %%
 # defining the list all tables in the database function
 def listtb():
     """
@@ -60,6 +63,7 @@ def listtb():
         return str(e)
 
 
+# %%
 # upload a dataframe to the database
 def uploadtb(df, tbname):
     """
@@ -88,6 +92,7 @@ def uploadtb(df, tbname):
         return str(e)
 
 
+# %%
 # download a table from the database
 def downloadtb(tbname):
     """
@@ -115,6 +120,7 @@ def downloadtb(tbname):
         print(str(e))
 
 
+# %%
 # delete a table from the database
 def deletetb(tbname):
     """
