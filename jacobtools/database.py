@@ -1,6 +1,6 @@
 # %%
 # import the libraries
-from sqlalchemy import create_engine, inspect, MetaData, Table
+from sqlalchemy import create_engine, inspect, MetaData, Table, text
 import pandas as pd
 
 
@@ -36,6 +36,7 @@ def infodb(host, user, passw, dbname, show_url=False):
     # if show_url is True then print the database url
     if show_url:
         print(f"The database url is: {databaseurl}")
+
 
 # %%
 # defining the list all tables in the database function
@@ -80,8 +81,13 @@ def uploadtb(df, tbname):
         # Create a SQLAlchemy engine to connect to the database
         engine = create_engine(databaseurl)
 
+        # engine.execute(text('DELETE FROM NseTicker'))
+        with engine.connect() as conn:
+            conn.execute(text(f"DELETE FROM {tbname}"))
+            conn.commit()
+
         # upload the dataframe to the database
-        df.to_sql(tbname, engine, if_exists='replace', index=False)
+        df.to_sql(tbname, engine, if_exists="append", index=False)
 
         # return a success message
         return "Dataframe uploaded successfully"
