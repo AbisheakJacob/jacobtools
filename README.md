@@ -1,6 +1,6 @@
 # jacobtools
 
-**jacobtools** is a Python package that contains handy functions. 
+**jacobtools** is a Python package that contains handy functions the tackle day to day code. 
 It's main goal, however, is to demonstrate how to create a package.  
 
 article for a detailed explanation on how to create your 
