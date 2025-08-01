@@ -1,25 +1,24 @@
-import setuptools
+from setuptools import setup, find_packages
 
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+# with open("README.md", "r", encoding="utf-8") as fh:
+#     long_description = fh.read()
 
-setuptools.setup(
+setup(
     name='jacobtools',
     version='0.0.1',
     author='Abisheak Jacob J',
     author_email='abisheakjacob0032@gmail.com',
     description='A local package to make my life easier',
-    long_description=long_description,
-    long_description_content_type="text/markdown",
+    #long_description=long_description,
+    #long_description_content_type="text/markdown",
     #url='https://github.com/AbisheakJacob/jacobtools',
-    project_urls={
-        "Bug Tracker": "https://github.com/Abisheakjacob/jacobtools/issues"
-    },
-    license='MIT',
-    packages=['jacobtools'],
+    # project_urls={
+    #     "Bug Tracker": "https://github.com/Abisheakjacob/jacobtools/issues"
+    # },
+    # license='MIT',
+    packages=find_packages(),
     install_requires=[
         # add dependencies here
-        'pandas', 
-        'sqlalchemy'
+        'pandas'
         ],
 )
