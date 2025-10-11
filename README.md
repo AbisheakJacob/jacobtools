@@ -1,41 +1,57 @@
-# jacobtools
+# JacobTools
 
-**jacobtools** is a Python package that contains handy functions the tackle day to day code. 
-It's main goal, however, is to demonstrate how to create a package.  
-
-article for a detailed explanation on how to create your 
-custom Python package that is installable from your GitHub repo!
+**JacobTools** is a my personal python library that contains code to automate day to day activities.
 
 ## Installation and updating
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install Toolbox like below. 
-Rerun this command to check for and install  updates .
+
+Installing the package from the github repository
+
 ```bash
-pip install git+https://github.com/Muls/toolbox
+pip install git+https://github.com/AbisheakJacob/JacobTools
 ```
 
-## Usage
-Features:
-* functions.listChunker  --> generator that chunks and interable in evenly sized chunks 
-* functions.weirdCase    --> converts a string to a totally unreadable format
-* functions.report      --> prints to the console with a timestamp
-* decorators.singleton  --> used for decoratint your class to make it a singleton
+Installing the local repository so that it updates automatically when a change is made.
 
-#### Demo of some of the features:
-```python
-import jacobtools
+```bash
+pip install .
 ```
+
+## Structure
+
+### gbq_queries
+
+This module contains codes to connect and work with data in Google BigQuery.
+
+| Function Name     | Description                                        |
+| ----------------- | -------------------------------------------------- |
+| query_gbq         | Read a table from GBQ as a DataFrame               |
+| fillrate_analysis | Perfrom Fill Rate Analysis on GBQ dataset or table |
+
+### preprocessing
+
+This module contains preprocessing steps to be performed on the data before actual analysis.
+
+| Function Name          | Description                                                                 |
+| ---------------------- | --------------------------------------------------------------------------- |
+| drop_columns_by_schema | Drop the columns that are markded in the Schema Document                    |
+| enforce_schema         | Apply the datatypes provided in schema document to the Columns in the Table |
+
+### sql_generation
+
+This module automatically generate SQL codes from DataFrame for ease of use.
+
+#### postgres
+
+| Function Name             | Description                                                        |
+| ------------------------- | ------------------------------------------------------------------ |
+| generate_create_table_sql | Generates SQL code to create the schema to upload data to postgres |
+
+## Next Steps
+
+1. Custom function to perform basic eda on a given dataframe (info, null values, shape, size)
+2. Function to perform match% analysis and perfrom a venn diagram for easier visualization
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
 
-## Database module (db.py)
-
-### infodb(hostname, username, password, databasename)
-The infodb function takes in the database credentials and stores them as global variables, that can be used in by other functions.
-- This function also creates the database URL that can be used by SQLAlchemy module (only for MySQL databases)
-
-### listtb()
-The listtb function provides the list of all the tables in the given database.
-
-***The Reference to this library can be found here:***
-Check out [this](https://mikehuls.medium.com/create-your-custom-python-package-that-you-can-pip-install-from-your-git-repository-f90465867893)
+**_The Reference to this library can be found here:_**
+The base construct of this library is referenced from [this article](https://mikehuls.medium.com/create-your-custom-python-package-that-you-can-pip-install-from-your-git-repository-f90465867893)
