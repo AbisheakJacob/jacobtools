@@ -3,8 +3,12 @@ MANIFEST.in
 README.md
 pyproject.toml
 setup.cfg
+setup.py
+src/jacobtools/harmonic_mean.c
 src/jacobtools/__init__.py
 src/jacobtools/config.py
+src/jacobtools/harmonic_mean.c
+src/jacobtools/harmonic_mean.pyx
 src/jacobtools.egg-info/PKG-INFO
 src/jacobtools.egg-info/SOURCES.txt
 src/jacobtools.egg-info/dependency_links.txt
