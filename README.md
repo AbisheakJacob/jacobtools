@@ -16,6 +16,17 @@ Installing the local repository so that it updates automatically when a change i
 pip install .
 ```
 
+### Creating C extension
+
+```python
+from setuptools import setup 
+from Cython.Build import cythonize
+
+setup(
+        ext_modules=cythonize("src/jacobtools/harmonic_mean.pyx")
+        )
+```
+
 ## Structure
 
 ### gbq_queries
