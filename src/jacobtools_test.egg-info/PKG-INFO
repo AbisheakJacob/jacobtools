@@ -7,8 +7,10 @@ Author: Abisheak Jacob J
 Author-email: "AbisheakJacob0032" abisheakjacob0032@gmail.com
 License: MIT
 Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.9
 Description-Content-Type: text/markdown
 License-File: LICENSE
+Requires-Dist: numpy>=2.1.0
 Dynamic: license-file
 
 README.md

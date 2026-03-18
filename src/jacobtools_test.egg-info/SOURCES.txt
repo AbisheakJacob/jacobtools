@@ -39,4 +39,5 @@ src/jacobtools_test/harmonic_mean.py
 src/jacobtools_test.egg-info/PKG-INFO
 src/jacobtools_test.egg-info/SOURCES.txt
 src/jacobtools_test.egg-info/dependency_links.txt
+src/jacobtools_test.egg-info/requires.txt
 src/jacobtools_test.egg-info/top_level.txt
