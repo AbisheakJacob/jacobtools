@@ -11,6 +11,7 @@ Requires-Python: >=3.9
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: numpy>=2.1.0
+Requires-Dist: termcolor>=1.1.0
 Dynamic: license-file
 
 README.md

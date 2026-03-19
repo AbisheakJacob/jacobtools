@@ -1,0 +1,2 @@
+[console_scripts]
+harmony = jacobtools_test.harmony:main

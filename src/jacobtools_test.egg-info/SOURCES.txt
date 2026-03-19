@@ -36,8 +36,10 @@ src/jacobtools/temp/pa.py
 src/jacobtools/temp/reason_for_absence.csv
 src/jacobtools_test/__init__.py
 src/jacobtools_test/harmonic_mean.py
+src/jacobtools_test/harmony.py
 src/jacobtools_test.egg-info/PKG-INFO
 src/jacobtools_test.egg-info/SOURCES.txt
 src/jacobtools_test.egg-info/dependency_links.txt
+src/jacobtools_test.egg-info/entry_points.txt
 src/jacobtools_test.egg-info/requires.txt
 src/jacobtools_test.egg-info/top_level.txt
