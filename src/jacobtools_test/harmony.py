@@ -1,7 +1,18 @@
 import sys
-from termcolor import cprint
 from jacobtools_test.harmonic_mean import harmonic_mean
+from termcolor import cprint
 
 def main():
-    nums = [float(arg) for arg in sys.argv[1:]]
-    cprint(harmonic_mean(nums), 'red', 'on_cyan', attrs=['bold'])
+    result = 0.0
+    
+    try:
+        nums = [float(num) for num in sys.argv[1:]]
+    except ValueError:
+        nums = []
+    
+    try:
+        result = harmonic_mean(nums)
+    except ZeroDivisionError:
+        pass
+    
+    cprint(result, 'red', 'on_cyan', attrs=['bold'])

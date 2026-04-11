@@ -19,3 +19,15 @@ build:
 	Remove-Item -Recurse -Force dist -ErrorAction SilentlyContinue
 	pyproject-build
 	py -m pip install .
+
+.PHONY: clean
+clean:
+	Remove-Item -Recurse -Force .tox
+	Remove-Item -Recurse -Force build -ErrorAction SilentlyContinue
+	Remove-Item -Recurse -Force dist -ErrorAction SilentlyContinue
+	Remove-Item -Recurse -Force *.egg-info -ErrorAction SilentlyContinue
+	Remove-Item -Recurse -Force .tox -ErrorAction SilentlyContinue
+
+.PHONY: freeze
+freeze: 
+	pip freeze > requirements.txt
