@@ -31,3 +31,15 @@ clean:
 .PHONY: freeze
 freeze: 
 	pip freeze > requirements.txt
+
+.PHONY: git
+git:
+	git add .
+	git commit -m "$(msg)"
+	git push
+
+.PHONY: git_recommit
+git_recommit:
+	git add .
+	git commit --amend --no-edit
+	git push --force

@@ -14,7 +14,6 @@ from jacobtools_test.harmony import main
         (["foo", "bar"], 0.0),
     ],
 )
-
 def test_harmony_parametrized(inputs, monkeypatch, capsys, expected):
     monkeypatch.setattr(sys, "argv", ["harmony"] + inputs)
     main()
