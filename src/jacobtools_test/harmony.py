@@ -16,4 +16,4 @@ def main():
     except ZeroDivisionError:
         pass
 
-    cprint(result, "red", "on_cyan", attrs=["bold"])
+    cprint(str(result), "red", "on_cyan", attrs=["bold"])
