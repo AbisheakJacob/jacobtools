@@ -2,4 +2,4 @@
 
 from . import harmonic_mean
 
-__all__ = [harmonic_mean]
+__all__ = ["harmonic_mean"]
