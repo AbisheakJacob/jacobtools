@@ -34,12 +34,19 @@ freeze:
 
 .PHONY: git
 git:
+	pip freeze > requirements.txt
 	git add .
 	git commit -m "$(msg)"
 	git push
 
 .PHONY: git_recommit
 git_recommit:
+	pip freeze > requirements.txt
 	git add .
 	git commit --amend --no-edit
 	git push --force
+
+.PHONY: pull
+git_pull:
+	git pull
+	pip install -r requirements.txt

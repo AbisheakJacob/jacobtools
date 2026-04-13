@@ -1,0 +1,25 @@
+site_name: JacobTools Documentation
+site_description: Documentation for JacobTools, a Python package for various utilities and tools.
+site_author: Abisheak Jacob J
+repo_name: "JacobTools"
+repo_url: "https://github.com/AbisheakJacob/JacobTools"
+
+theme:
+  name: material
+  font:
+    text: "Merriweather Sans"
+    code: "Red Hat Mono"
+    
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: false
+            show_root_heading: true
+            members_order: source
+          paths: [src]
+
+watch:
+  - ../src
