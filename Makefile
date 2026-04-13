@@ -50,3 +50,9 @@ git_recommit:
 git_pull:
 	git pull
 	pip install -r requirements.txt
+
+.PHONY: build
+build:
+	Remove-Item -Recurse -Force dist -ErrorAction SilentlyContinue
+	pyproject-build
+	py -m pip install .

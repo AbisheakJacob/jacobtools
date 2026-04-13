@@ -11,6 +11,12 @@ src/JacobTools.egg-info/requires.txt
 src/JacobTools.egg-info/top_level.txt
 src/jacobtools/__init__.py
 src/jacobtools/config.py
+src/jacobtools.egg-info/PKG-INFO
+src/jacobtools.egg-info/SOURCES.txt
+src/jacobtools.egg-info/dependency_links.txt
+src/jacobtools.egg-info/entry_points.txt
+src/jacobtools.egg-info/requires.txt
+src/jacobtools.egg-info/top_level.txt
 src/jacobtools/__pycache__/__init__.cpython-312.pyc
 src/jacobtools/__pycache__/config.cpython-312.pyc
 src/jacobtools/gbq_queries/__init__.py

@@ -4,7 +4,10 @@ from termcolor import cprint
 
 
 def main():
-    """Calculate the harmonic mean of the provided numbers."""
+    """Calculate the harmonic mean of the provided numbers.
+
+    This is a test documentation
+    """
 
     result = 0.0
 
