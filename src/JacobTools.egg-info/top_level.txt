@@ -1,2 +1,2 @@
-jacobtools
+JacobTools
 jacobtools_test

@@ -22,15 +22,25 @@ build:
 
 .PHONY: clean
 clean:
-	Remove-Item -Recurse -Force .tox
+# 	Remove-Item -Recurse -Force .tox
 	Remove-Item -Recurse -Force build -ErrorAction SilentlyContinue
 	Remove-Item -Recurse -Force dist -ErrorAction SilentlyContinue
 	Remove-Item -Recurse -Force *.egg-info -ErrorAction SilentlyContinue
 	Remove-Item -Recurse -Force .tox -ErrorAction SilentlyContinue
 
+.PHONY: format
+format:
+	black src/JacobTools test
+	flake8 src/JacobTools test
+# 	mypy --ignore-missing-imports src/JacobTools test
+
 .PHONY: freeze
 freeze: 
 	pip freeze > requirements.txt
+
+.PHONY: venv
+venv:
+	venv/Scripts/activate
 
 .PHONY: git
 git:
@@ -51,8 +61,3 @@ git_pull:
 	git pull
 	pip install -r requirements.txt
 
-.PHONY: build
-build:
-	Remove-Item -Recurse -Force dist -ErrorAction SilentlyContinue
-	pyproject-build
-	py -m pip install .

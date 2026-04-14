@@ -1,3 +1,4 @@
 venv/
 .idea/
+.pypirc
 instructions.txt
