@@ -26,7 +26,7 @@ clean:
 	Remove-Item -Recurse -Force build -ErrorAction SilentlyContinue
 	Remove-Item -Recurse -Force dist -ErrorAction SilentlyContinue
 	Remove-Item -Recurse -Force *.egg-info -ErrorAction SilentlyContinue
-	Remove-Item -Recurse -Force .tox -ErrorAction SilentlyContinue
+# 	Remove-Item -Recurse -Force .tox -ErrorAction SilentlyContinue
 
 .PHONY: format
 format:
