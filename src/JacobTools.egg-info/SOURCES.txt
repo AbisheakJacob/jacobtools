@@ -4,6 +4,8 @@ README.md
 pyproject.toml
 setup.cfg
 src/JacobTools/__init__.py
+src/JacobTools/__main__.py
+src/JacobTools/cli.py
 src/JacobTools.egg-info/PKG-INFO
 src/JacobTools.egg-info/SOURCES.txt
 src/JacobTools.egg-info/dependency_links.txt
@@ -20,7 +22,17 @@ src/JacobTools/connectors/bigquery/metadata.py
 src/JacobTools/connectors/bigquery/profiling.py
 src/JacobTools/connectors/bigquery/query.py
 src/JacobTools/connectors/bigquery/utils.py
+src/JacobTools/connectors/databricks/__init__.py
+src/JacobTools/connectors/databricks/client.py
+src/JacobTools/connectors/databricks/connector.py
 src/JacobTools/exceptions/errors.py
+src/JacobTools/format/__init__.py
+src/JacobTools/format/python.py
+src/JacobTools/format/sql.py
+src/JacobTools/io/__init__.py
+src/JacobTools/io/reader.py
+src/JacobTools/io/utils.py
+src/JacobTools/io/writer.py
 src/JacobTools/utils/logging.py
 src/JacobTools/utils/validation.py
 src/jacobtools_test/__init__.py

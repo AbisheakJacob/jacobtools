@@ -1,0 +1,58 @@
+[sqlfluff]
+dialect = bigquery
+templater = jinja
+max_line_length = 120
+
+# Ignore rules you don't care about (e.g., L031 = table aliases)
+exclude_rules = L031
+
+[sqlfluff:indentation]
+indent_unit = space
+tab_space_size = 4
+
+[sqlfluff:rules:capitalisation.keywords]
+# Force SELECT, FROM, WHERE to be uppercase
+capitalisation_policy = upper
+
+[sqlfluff]
+dialect = bigquery
+templater = jinja
+max_line_length = 120
+
+# Sqlfluff doesn't support treating commas before cte and in select statement separately, so ignoring them
+[sqlfluff:layout:type:comma]
+spacing_before = touch
+line_position = trailing
+
+# Ensures table name immediately follows the FROM keyword with a single space, preventing unwanted line breaks.
+[sqlfluff:layout:type:from_clause]
+spacing_after = touch
+line_position = trailing
+
+# formatting join clause
+[sqlfluff:indentation]
+indent_unit = space
+tab_space_size = 4
+allow_implicit_indents = True
+
+# indents ON clause one level deeper that JOIN clause
+[sqlfluff:layout:type:join_on_condition]
+line_position = trailing
+
+# Force uppercase for SQL keywords (SELECT, FROM, LEFT JOIN)
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = upper
+
+# Force uppercase for functions (SUM, MAX, CONCAT)
+[sqlfluff:rules:capitalisation.functions]
+extended_capitalisation_policy = upper
+
+# Force lowercase for unquoted identifiers (table names, column names)
+[sqlfluff:rules:capitalisation.identifiers]
+capitalisation_policy = lower
+
+# Always require the 'AS' keyword when aliasing tables or columns
+[sqlfluff:rules:aliasing.table]
+aliasing = explicit
+[sqlfluff:rules:aliasing.column]
+aliasing = explicit
