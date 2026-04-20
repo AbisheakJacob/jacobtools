@@ -2,6 +2,7 @@
 
 import pandas as pd
 from google.cloud import bigquery
+
 from JacobTools.connectors.bigquery.client import BigQueryClientWrapper
 from JacobTools.exceptions.errors import QueryExecutionError
 from JacobTools.utils.logging import get_logger
@@ -23,9 +24,7 @@ class QueryManager:
         except Exception as e:
             raise QueryExecutionError(f"Query execution failed: {e}")
 
-    def execute_write(
-        self, df: pd.DataFrame, dataset_id: str, table_id: str, if_exists: str = "append"
-    ) -> None:
+    def execute_write(self, df: pd.DataFrame, dataset_id: str, table_id: str, if_exists: str = "append") -> None:
         table_ref = f"{self.gbq_project_id}.{dataset_id}.{table_id}"
 
         write_disp = (
@@ -38,9 +37,7 @@ class QueryManager:
 
         try:
             logger.info(f"Writing {len(df)} rows to {table_ref} ({if_exists})...")
-            job = self.wrapper.client.load_table_from_dataframe(
-                df, table_ref, job_config=job_config
-            )
+            job = self.wrapper.client.load_table_from_dataframe(df, table_ref, job_config=job_config)
             job.result()
             logger.info(f"Write complete for {table_ref}.")
         except Exception as e:

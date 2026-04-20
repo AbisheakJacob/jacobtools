@@ -1,9 +1,11 @@
 import os
-import pandas as pd
+from typing import Any, Optional, Union
+
 import openpyxl
-from typing import Union, Any, Optional
-from JacobTools.utils.logging import get_logger
+import pandas as pd
+
 from JacobTools.io.utils import parse_excel_cell
+from JacobTools.utils.logging import get_logger
 
 logger = get_logger(__name__)
 
@@ -20,14 +22,14 @@ class DataWriter:
         clear_range: Optional[str] = None,
         index: bool = False,
         header: bool = True,
-        **kwargs
+        **kwargs,
     ) -> None:
         """
         Writes a DataFrame to Excel. Can target specific cells and safely overlay
         data without destroying the rest of the sheet.
         """
         start_row, start_col, _ = parse_excel_cell(start_cell)
-        
+
         # 1. Clear specific cells if requested and file exists
         if clear_range and os.path.exists(file_path):
             try:
@@ -49,23 +51,23 @@ class DataWriter:
 
         with pd.ExcelWriter(file_path, engine="openpyxl", mode=mode, if_sheet_exists=if_exists) as writer:
             df.to_excel(
-                writer, 
-                sheet_name=sheet_name, 
-                startrow=start_row, 
-                startcol=start_col, 
-                index=index, 
+                writer,
+                sheet_name=sheet_name,
+                startrow=start_row,
+                startcol=start_col,
+                index=index,
                 header=header,
-                **kwargs
+                **kwargs,
             )
         logger.info(f"Successfully wrote data to {file_path} at {start_cell}.")
 
     def csv(self, df: pd.DataFrame, file_path: str, mode: str = "overwrite", index: bool = False) -> None:
         """Writes to CSV. Prevents duplicating the header row when appending."""
-        write_mode = 'a' if mode == "append" else 'w'
-        
+        write_mode = "a" if mode == "append" else "w"
+
         # Only write the header if we are overwriting, OR if the file doesn't exist yet
-        write_header = True if write_mode == 'w' or not os.path.exists(file_path) else False
-        
+        write_header = True if write_mode == "w" or not os.path.exists(file_path) else False
+
         df.to_csv(file_path, mode=write_mode, index=index, header=write_header)
         logger.info(f"Data {'appended' if write_mode == 'a' else 'written'} to {file_path}.")
 
@@ -77,18 +79,18 @@ class DataWriter:
 
     def markdown(self, data: Union[pd.DataFrame, str], file_path: str, mode: str = "overwrite") -> None:
         """Writes DataFrame or raw text to a Markdown file."""
-        write_mode = 'a' if mode == "append" else 'w'
+        write_mode = "a" if mode == "append" else "w"
         text_data = self._format_data(data, markdown=True)
-        
+
         with open(file_path, write_mode, encoding="utf-8") as f:
             f.write(text_data + "\n\n")
         logger.info(f"Markdown written to {file_path}.")
 
     def txt(self, data: Union[pd.DataFrame, str], file_path: str, mode: str = "overwrite") -> None:
         """Writes DataFrame or raw text to a standard TXT file."""
-        write_mode = 'a' if mode == "append" else 'w'
+        write_mode = "a" if mode == "append" else "w"
         text_data = self._format_data(data, markdown=False)
-        
+
         with open(file_path, write_mode, encoding="utf-8") as f:
             f.write(text_data + "\n")
         logger.info(f"Text written to {file_path}.")

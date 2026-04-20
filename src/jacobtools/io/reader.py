@@ -1,7 +1,9 @@
+from typing import List, Optional, Union
+
 import pandas as pd
-from typing import Optional, List, Union
-from JacobTools.utils.logging import get_logger
+
 from JacobTools.io.utils import parse_excel_cell
+from JacobTools.utils.logging import get_logger
 
 logger = get_logger(__name__)
 
@@ -16,7 +18,7 @@ class DataReader:
         start_cell: str = "A1",
         end_cell: Optional[str] = None,
         has_header: bool = True,
-        **kwargs
+        **kwargs,
     ) -> pd.DataFrame:
         """
         Reads a specific range of an Excel sheet into a DataFrame.
@@ -44,7 +46,7 @@ class DataReader:
                 usecols=usecols,
                 nrows=nrows,
                 header=0 if has_header else None,
-                **kwargs
+                **kwargs,
             )
             return df
         except Exception as e:
@@ -52,22 +54,11 @@ class DataReader:
             raise
 
     def csv(
-        self,
-        file_path: str,
-        skip_rows: int = 0,
-        delimiter: str = ",",
-        has_header: bool = True,
-        **kwargs
+        self, file_path: str, skip_rows: int = 0, delimiter: str = ",", has_header: bool = True, **kwargs
     ) -> pd.DataFrame:
         """Reads a CSV file with advanced parsing options."""
         logger.info(f"Reading CSV: {file_path}")
-        return pd.read_csv(
-            file_path,
-            skiprows=skip_rows,
-            sep=delimiter,
-            header=0 if has_header else None,
-            **kwargs
-        )
+        return pd.read_csv(file_path, skiprows=skip_rows, sep=delimiter, header=0 if has_header else None, **kwargs)
 
     def parquet(self, file_path: str, columns: Optional[List[str]] = None, **kwargs) -> pd.DataFrame:
         """Reads Parquet files natively."""

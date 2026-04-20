@@ -1,8 +1,9 @@
 """Dedicated to heavy analyticial queries like calculating fill rates"""
 
 from typing import Dict
-from JacobTools.connectors.bigquery.query import QueryManager
+
 from JacobTools.connectors.bigquery.metadata import MetadataManager
+from JacobTools.connectors.bigquery.query import QueryManager
 
 
 class ProfilerManager:

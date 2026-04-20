@@ -3,7 +3,9 @@
 Isolates authentication and API connection logic"""
 
 from typing import Optional
+
 from google.cloud import bigquery
+
 from JacobTools.exceptions.errors import ConnectionError
 from JacobTools.utils.logging import get_logger
 

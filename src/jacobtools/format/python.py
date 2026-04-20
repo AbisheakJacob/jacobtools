@@ -1,9 +1,12 @@
 import ast
-import black
 from typing import List
+
+import black
+
 from JacobTools.utils.logging import get_logger
 
 logger = get_logger(__name__)
+
 
 class PythonFormatter:
     """Handles Python linting and formatting using Black and AST."""
@@ -35,7 +38,7 @@ class PythonFormatter:
             # Black expects a trailing newline to function properly
             if not code_string.endswith("\n"):
                 code_string += "\n"
-            
+
             formatted_code = black.format_str(code_string, mode=self.mode)
             return formatted_code
         except black.NothingChanged:

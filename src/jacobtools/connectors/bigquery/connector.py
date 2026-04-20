@@ -1,21 +1,22 @@
 """The Facade (The Final Connecter)
 
-This is what your end-users will interact with. it inherits from BaseConnectory to fulfill the contract, but it offloads the actual work to the managers
+This is what your end-users will interact with. it inherits from BaseConnectory to fulfill the contract,
+but it offloads the actual work to the managers
 """
 
-from typing import List, Dict, Optional
+from typing import Dict, List, Optional
+
 import pandas as pd
 
-from JacobTools.connectors.base import BaseConnector
 from JacobTools.config.settings import BigQuerySettings
-from JacobTools.exceptions.errors import ConfigurationError
-from JacobTools.utils.validation import validate_table_reference
-
+from JacobTools.connectors.base import BaseConnector
 # Import the specialized managers
 from JacobTools.connectors.bigquery.client import BigQueryClientWrapper
-from JacobTools.connectors.bigquery.query import QueryManager
 from JacobTools.connectors.bigquery.metadata import MetadataManager
 from JacobTools.connectors.bigquery.profiling import ProfilerManager
+from JacobTools.connectors.bigquery.query import QueryManager
+from JacobTools.exceptions.errors import ConfigurationError
+from JacobTools.utils.validation import validate_table_reference
 
 
 class GoogleBigQueryConnector(BaseConnector):
@@ -24,10 +25,10 @@ class GoogleBigQueryConnector(BaseConnector):
     """
 
     def __init__(
-            self,
-            gcp_project_id: Optional[str] = None,
-            gbq_project_id: Optional[str] = None,
-            credentials_path: Optional[str] = None
+        self,
+        gcp_project_id: Optional[str] = None,
+        gbq_project_id: Optional[str] = None,
+        credentials_path: Optional[str] = None,
     ):
         # Fall back to environment settings if not explicitly provided
         settings = BigQuerySettings()
@@ -36,9 +37,7 @@ class GoogleBigQueryConnector(BaseConnector):
         self.credentials_path = credentials_path or settings.credentials_path
 
         if not self.gcp_project_id:
-            raise ConfigurationError(
-                "A GCP project_id must be provided or set in environment variables."
-            )
+            raise ConfigurationError("A GCP project_id must be provided or set in environment variables.")
 
         # Initialize the underlying components
         self._client_wrapper = BigQueryClientWrapper(self.gcp_project_id, self.credentials_path)
@@ -51,9 +50,7 @@ class GoogleBigQueryConnector(BaseConnector):
     def read_data(self, query: str) -> pd.DataFrame:
         return self._query_manager.execute_read(query)
 
-    def write_data(
-        self, df: pd.DataFrame, dataset_id: str, table_id: str, if_exists: str = "append"
-    ) -> None:
+    def write_data(self, df: pd.DataFrame, dataset_id: str, table_id: str, if_exists: str = "append") -> None:
         validate_table_reference(self.gbq_project_id, dataset_id, table_id)
         self._query_manager.execute_write(df, dataset_id, table_id, if_exists)
 

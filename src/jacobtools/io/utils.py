@@ -18,7 +18,7 @@ def parse_excel_cell(cell: str) -> Tuple[int, int, str]:
     # Convert Excel column letter to 0-indexed integer (A=0, B=1, Z=25, AA=26)
     col_idx = 0
     for char in col_letter:
-        col_idx = col_idx * 26 + (ord(char) - ord('A') + 1)
-    col_idx -= 1 
+        col_idx = col_idx * 26 + (ord(char) - ord("A") + 1)
+    col_idx -= 1
 
     return row_idx, col_idx, col_letter

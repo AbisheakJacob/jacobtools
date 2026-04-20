@@ -4,6 +4,7 @@ from .writer import DataWriter
 
 class DataIOManager:
     """Facade for all IO operations."""
+
     def __init__(self):
         self.read = DataReader()
         self.write = DataWriter()

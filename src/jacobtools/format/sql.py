@@ -1,9 +1,12 @@
 import os
+from typing import Any, Dict, List
+
 import sqlfluff
-from typing import List, Dict, Any
+
 from JacobTools.utils.logging import get_logger
 
 logger = get_logger(__name__)
+
 
 class SQLFormatter:
     """Handles SQL linting and formatting using SQLFluff."""
@@ -17,13 +20,8 @@ class SQLFormatter:
         self.config_path = config_path
 
         # Build the configuration override dictionary
-        self.config_overrides = {
-            "core": {
-                "dialect": self.dialect,
-                "templater": self.templater
-            }
-        }
-        
+        self.config_overrides = {"core": {"dialect": self.dialect, "templater": self.templater}}
+
         # If the user has a .sqlfluff file (e.g., in their repo root), point to it
         if self.config_path and os.path.exists(self.config_path):
             logger.info(f"Using SQLFluff config from {self.config_path}")
@@ -33,7 +31,7 @@ class SQLFormatter:
 
     def view_errors(self, sql_string: str) -> List[Dict[str, Any]]:
         """
-        Lints the SQL and returns a list of dictionaries detailing the errors 
+        Lints the SQL and returns a list of dictionaries detailing the errors
         (line number, position, rule broken, and description).
         """
         logger.info("Linting SQL string...")
@@ -48,7 +46,7 @@ class SQLFormatter:
 
     def format_code(self, sql_string: str) -> str:
         """
-        Automatically fixes linting errors and formats the SQL string 
+        Automatically fixes linting errors and formats the SQL string
         based on the preset requirements.
         """
         logger.info("Formatting SQL string...")

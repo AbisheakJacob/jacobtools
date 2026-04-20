@@ -25,6 +25,7 @@ src/JacobTools/connectors/bigquery/utils.py
 src/JacobTools/connectors/databricks/__init__.py
 src/JacobTools/connectors/databricks/client.py
 src/JacobTools/connectors/databricks/connector.py
+src/JacobTools/connectors/databricks/query.py
 src/JacobTools/exceptions/errors.py
 src/JacobTools/format/__init__.py
 src/JacobTools/format/python.py
