@@ -30,9 +30,9 @@ clean:
 
 .PHONY: format
 format:
-	black src/JacobTools test
-	flake8 src/JacobTools test
-# 	mypy --ignore-missing-imports src/JacobTools test
+	black src/AnalystStack test
+	flake8 src/AnalystStack test
+# 	mypy --ignore-missing-imports src/AnalystStack test
 
 .PHONY: freeze
 freeze: 
