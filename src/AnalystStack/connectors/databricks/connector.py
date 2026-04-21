@@ -1,12 +1,15 @@
 """The Facade (The Final Connecter)
 
-This is what your end-users will interact with. it inherits from BaseConnectory to fulfill the contract, but it offloads the actual work to the managers
+This is what your end-users will interact with. it inherits from BaseConnectory to fulfill the contract,
+but it offloads the actual work to the managers
 """
 
 from typing import Optional
 
 from AnalystStack.config.settings import DatabricksSettings
 from AnalystStack.connectors.base import BaseConnector
+
+from AnalystStack.connectors.databricks.client import DatabricksClientWrapper
 from AnalystStack.exceptions.errors import ConfigurationError
 
 
@@ -27,7 +30,7 @@ class DatabricksConnector(BaseConnector):
 
         if not self.server_hostname or not self.http_path or not self.access_token:
             raise ConfigurationError(
-                "A Databricks server_hostname, http_path, and access_token must be provided or set in environment variables."
+                "A Databricks server_hostname, http_path, and access_token must be provided or set in env variables."
             )
 
         self._client_wrapper = DatabricksClientWrapper(self.server_hostname, self.http_path, self.access_token)

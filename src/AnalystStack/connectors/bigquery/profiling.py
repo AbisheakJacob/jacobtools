@@ -1,6 +1,6 @@
 """Dedicated to heavy analyticial queries like calculating fill rates"""
 
-from typing import Dict
+from typing import Dict, Optional
 
 from AnalystStack.connectors.bigquery.metadata import MetadataManager
 from AnalystStack.connectors.bigquery.query import QueryManager
@@ -9,7 +9,9 @@ from AnalystStack.connectors.bigquery.query import QueryManager
 class ProfilerManager:
     """Generates data quality statistics and profiles."""
 
-    def __init__(self, query_manager: QueryManager, metadata_manager: MetadataManager, gbq_project_id: str):
+    def __init__(
+        self, query_manager: QueryManager, metadata_manager: MetadataManager, gbq_project_id: Optional[str] = None
+    ):
         self.gbq_project_id = gbq_project_id
         self.query_manager = query_manager
         self.metadata_manager = metadata_manager

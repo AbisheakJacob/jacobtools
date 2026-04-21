@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: AnalystStack
+Version: 0.0.9
+Summary: This package contains functions that help me tackle my day to day data andalytics requirements
+Home-page: https://github.com/AbisheakJacob/AnalystStack
+Author: Abisheak Jacob J
+Author-email: "abisheakjacob0032@gmail.com"
+License: MIT
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=2.1.0
+Requires-Dist: termcolor>=1.1.0
+Dynamic: license-file
+
+README.md

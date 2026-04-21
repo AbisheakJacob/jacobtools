@@ -15,4 +15,4 @@ class MetadataManager:
         self.qurey_manager = query_manager
 
     def fetch_tables(self, schema: str) -> List[str]:
-        return schema
+        return [schema]

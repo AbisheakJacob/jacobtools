@@ -2,6 +2,17 @@
 icon: lucide/rocket
 ---
 
+### Creating C extension
+
+```python
+from setuptools import setup 
+from Cython.Build import cythonize
+
+setup(
+        ext_modules=cythonize("src/AnalyticsStack/harmonic_mean.pyx")
+        )
+```
+
 # Get started
 
 For full documentation visit [zensical.org](https://zensical.org/docs/).

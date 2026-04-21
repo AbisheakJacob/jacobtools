@@ -18,7 +18,7 @@ class QueryManager:
     def execute_read(self, query: str) -> pd.DataFrame:
         try:
             logger.debug(f"Executing read query: {query[:100]}...")
-            with self._wrapper.client.cursor() as cursor:
+            with self.wrapper.client.cursor() as cursor:
                 return cursor.execute(query).fetchall_arrow().to_pandas()
         except Exception as e:
             raise QueryExecutionError(f"Query execution failed: {e}")

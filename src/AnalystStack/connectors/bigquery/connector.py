@@ -1,6 +1,7 @@
 """The Facade (The Final Connecter)
 
-This is what your end-users will interact with. it inherits from BaseConnectory to fulfill the contract, but it offloads the actual work to the managers
+This is what your end-users will interact with. it inherits from BaseConnectory to fulfill the contract,
+but it offloads the actual work to the managers
 """
 
 from typing import Dict, List, Optional
@@ -9,6 +10,7 @@ import pandas as pd
 
 from AnalystStack.config.settings import BigQuerySettings
 from AnalystStack.connectors.base import BaseConnector
+
 # Import the specialized managers
 from AnalystStack.connectors.bigquery.client import BigQueryClientWrapper
 from AnalystStack.connectors.bigquery.metadata import MetadataManager
@@ -41,7 +43,7 @@ class GoogleBigQueryConnector(BaseConnector):
         # Initialize the underlying components
         self._client_wrapper = BigQueryClientWrapper(self.gcp_project_id, self.credentials_path)
         self._query_manager = QueryManager(self._client_wrapper, self.gbq_project_id)
-        self._metadata_manager = MetadataManager(self._client_wrapper, self._query_manager, self.gbq_project_id)
+        self._metadata_manager = MetadataManager(self._query_manager, self.gbq_project_id)
         self._profiler_manager = ProfilerManager(self._query_manager, self._metadata_manager, self.gbq_project_id)
 
     # --- Implement BaseConnector Abstract Methods ---
@@ -50,7 +52,7 @@ class GoogleBigQueryConnector(BaseConnector):
         return self._query_manager.execute_read(query)
 
     def write_data(self, df: pd.DataFrame, dataset_id: str, table_id: str, if_exists: str = "append") -> None:
-        validate_table_reference(self.gbq_project_id, dataset_id, table_id)
+        validate_table_reference(dataset_id, table_id)
         self._query_manager.execute_write(df, dataset_id, table_id, if_exists)
 
     def get_all_table_names(self, dataset_id: str) -> List[str]:

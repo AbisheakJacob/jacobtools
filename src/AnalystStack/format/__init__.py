@@ -1,11 +1,12 @@
 from .python import PythonFormatter
 from .sql import SQLFormatter
+from typing import Optional
 
 
 class CodeFormatManager:
     """Facade for all code formatting and linting operations."""
 
-    def __init__(self, sql_config_path: str = None):
+    def __init__(self, sql_config_path: Optional[str] = None):
         # You can pass a path to a .sqlfluff file here
         self.sql = SQLFormatter(config_path=sql_config_path)
         self.python = PythonFormatter()

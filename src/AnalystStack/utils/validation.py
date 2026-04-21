@@ -1,11 +1,10 @@
 """Ensures safety before executing costly cloud operations"""
 
 import re
-
 from AnalystStack.exceptions.errors import ValidationError
 
 
-def validate_table_reference(gbq_project_id: str, dataset_id: str, table_id: str) -> None:
+def validate_table_reference(dataset_id: str, table_id: str) -> None:
     """Validates that dataset and table IDs conform to BigQuery naming standards."""
     pattern = r"^[a-zA-Z0-9_]+$"
     if not re.match(pattern, dataset_id):

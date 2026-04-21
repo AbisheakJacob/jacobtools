@@ -4,7 +4,7 @@ This enforces a strict contract. Any future connector (Snowflake, Postgres, etc.
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List
+from typing import List
 
 import pandas as pd
 

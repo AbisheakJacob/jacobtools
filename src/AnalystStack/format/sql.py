@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import sqlfluff
 
@@ -11,7 +11,7 @@ logger = get_logger(__name__)
 class SQLFormatter:
     """Handles SQL linting and formatting using SQLFluff."""
 
-    def __init__(self, dialect: str = "bigquery", templater: str = "jinja", config_path: str = None):
+    def __init__(self, dialect: str = "bigquery", templater: str = "jinja", config_path: Optional[str] = None):
         """
         config_path: Path to a .sqlfluff file containing your preset requirements.
         """

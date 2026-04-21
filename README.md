@@ -1,13 +1,21 @@
-# JacobTools
+# AnalyticsStack
 
-**JacobTools** is a my personal python library that contains code to automate day to day activities.
+**AnalyticsStack** is a my personal python library that contains code to automate day to day activities.
 
 ## Installation and updating
+
+Installing the package from PyPI
+
+```bash
+pip install AnalystStack
+```
+
+OR
 
 Installing the package from the github repository
 
 ```bash
-pip install git+https://github.com/AbisheakJacob/JacobTools
+pip install git+https://github.com/AbisheakJacob/AnalyticsStack
 ```
 
 Installing the local repository so that it updates automatically when a change is made.
@@ -16,46 +24,45 @@ Installing the local repository so that it updates automatically when a change i
 pip install .
 ```
 
-### Creating C extension
-
-```python
-from setuptools import setup 
-from Cython.Build import cythonize
-
-setup(
-        ext_modules=cythonize("src/jacobtools/harmonic_mean.pyx")
-        )
-```
 
 ## Structure
 
-### gbq_queries
+### Connectors
 
-This module contains codes to connect and work with data in Google BigQuery.
+This module contains codes to connect and work with data in Google BigQuery and Databricks.
 
 | Function Name     | Description                                        |
 | ----------------- | -------------------------------------------------- |
-| query_gbq         | Read a table from GBQ as a DataFrame               |
-| fillrate_analysis | Perfrom Fill Rate Analysis on GBQ dataset or table |
+| read_data         | Read a table from database as a DataFrame               |
+| write_data | Write data to database from DataFrame |
+| get_all_table_names | Get all table names in a given project/catalog |
+| get_datatypes | Get the datatypes for all columns in a table |
+| get_fillrate | Get Fill Rate Analyssi for all the columns in a table |
 
-### preprocessing
+### Format
 
-This module contains preprocessing steps to be performed on the data before actual analysis.
+This module support formatting python code or SQL queries.
 
 | Function Name          | Description                                                                 |
 | ---------------------- | --------------------------------------------------------------------------- |
-| drop_columns_by_schema | Drop the columns that are markded in the Schema Document                    |
-| enforce_schema         | Apply the datatypes provided in schema document to the Columns in the Table |
+| pyton | Format python code                    |
+| sql         | Format SQL code |
 
-### sql_generation
+### IO
 
-This module automatically generate SQL codes from DataFrame for ease of use.
+This module makes it easier to read and write data.
 
 #### postgres
 
 | Function Name             | Description                                                        |
 | ------------------------- | ------------------------------------------------------------------ |
-| generate_create_table_sql | Generates SQL code to create the schema to upload data to postgres |
+| reader.excel | read data from an excel |
+| reader.csv | read data from a csv |
+| writer.exel | write data to excel |
+| writer.csv | Write data to csv |
+| writer.markdown | write tables and string to markdown |
+| writer.txt | write tables and string to text file |
+| writer.clipboard | copy data to clipboard |
 
 ## Next Steps
 

@@ -1,5 +1,6 @@
 """Dedicated to executing SQL and moving data"""
 
+from typing import Optional
 import pandas as pd
 from google.cloud import bigquery
 
@@ -13,7 +14,7 @@ logger = get_logger(__name__)
 class QueryManager:
     """Handles read and write data operations to BigQuery."""
 
-    def __init__(self, client_wrapper: BigQueryClientWrapper, gbq_project_id: str):
+    def __init__(self, client_wrapper: BigQueryClientWrapper, gbq_project_id: Optional[str] = None):
         self.wrapper = client_wrapper
         self.gbq_project_id = gbq_project_id
 

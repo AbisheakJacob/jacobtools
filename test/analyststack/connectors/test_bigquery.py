@@ -4,8 +4,7 @@ import pandas as pd
 import pytest
 
 from AnalystStack.connectors import GoogleBigQueryConnector
-from AnalystStack.exceptions.errors import (ConfigurationError,
-                                            QueryExecutionError)
+from AnalystStack.exceptions.errors import ConfigurationError, QueryExecutionError
 
 # ---------------------------------------------------------
 # Fixtures
