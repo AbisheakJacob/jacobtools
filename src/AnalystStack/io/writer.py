@@ -1,5 +1,5 @@
 import os
-from typing import Any, Optional, Union
+from typing import Any, Union
 
 from openpyxl import load_workbook
 import pandas as pd

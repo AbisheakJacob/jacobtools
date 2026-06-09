@@ -1,63 +1,60 @@
 # =========================================================
-# Bootstrap Makefile
+# AnalystStack — developer tasks (Windows / PowerShell)
 # =========================================================
 
 SHELL := powershell.exe
 .SHELLFLAGS := -NoProfile -ExecutionPolicy Bypass -Command
 
-PROJECT_NAME := my_datascience_project
 PYTHON := python
-VENV := .venv
-PYTHON_VENV := venv\Scripts\python.exe
 
 # =========================================================
-# Build the package
+# Environment
 # =========================================================
 
-.PHONY: build
-build:
-	Remove-Item -Recurse -Force dist -ErrorAction SilentlyContinue
-	pyproject-build
-	py -m pip install .
+.PHONY: install
+install:
+	$(PYTHON) -m pip install -e ".[dev,bigquery]"
 
-.PHONY: clean
-clean:
-# 	Remove-Item -Recurse -Force .tox
-	Remove-Item -Recurse -Force build -ErrorAction SilentlyContinue
-	Remove-Item -Recurse -Force dist -ErrorAction SilentlyContinue
-	Remove-Item -Recurse -Force *.egg-info -ErrorAction SilentlyContinue
-# 	Remove-Item -Recurse -Force .tox -ErrorAction SilentlyContinue
+# =========================================================
+# Quality
+# =========================================================
 
 .PHONY: format
 format:
 	black src/AnalystStack test
+
+.PHONY: lint
+lint:
 	flake8 src/AnalystStack test
-# 	mypy --ignore-missing-imports src/AnalystStack test
 
-.PHONY: freeze
-freeze: 
-	pip freeze > requirements.txt
+.PHONY: typecheck
+typecheck:
+	mypy --ignore-missing-imports src/AnalystStack test
 
-.PHONY: venv
-venv:
-	venv/Scripts/activate
+.PHONY: test
+test:
+	pytest
 
-.PHONY: git
-git:
-	pip freeze > requirements.txt
-	git add .
-	git commit -m "$(msg)"
-	git push
+.PHONY: check
+check: format lint typecheck test
 
-.PHONY: git_recommit
-git_recommit:
-	pip freeze > requirements.txt
-	git add .
-	git commit --amend --no-edit
-	git push --force
+# =========================================================
+# Build / docs
+# =========================================================
 
-.PHONY: pull
-git_pull:
-	git pull
-	pip install -r requirements.txt
+.PHONY: build
+build: clean
+	$(PYTHON) -m build
 
+.PHONY: docs
+docs:
+	cd docs; zensical build --clean
+
+.PHONY: docs-serve
+docs-serve:
+	cd docs; zensical serve
+
+.PHONY: clean
+clean:
+	Remove-Item -Recurse -Force build, dist, *.egg-info, src/*.egg-info, docs/site, docs/.cache -ErrorAction SilentlyContinue
+	Get-ChildItem -Recurse -Include __pycache__, .pytest_cache, .mypy_cache -Directory | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue

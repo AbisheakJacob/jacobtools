@@ -1,10 +1,7 @@
 import re
 from typing import Tuple
-import typer 
 
-app = typer.Typer()
 
-@app.command()
 def parse_excel_cell(cell: str) -> Tuple[int, int, str]:
     """
     Parses an Excel cell reference (e.g., 'C4') into 0-indexed row/col integers
@@ -25,7 +22,3 @@ def parse_excel_cell(cell: str) -> Tuple[int, int, str]:
     col_idx -= 1
 
     return row_idx, col_idx, col_letter
-
-
-if __name__ == "__main__":
-    app()

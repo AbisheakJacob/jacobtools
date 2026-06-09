@@ -1,7 +1,9 @@
+import os
+from pathlib import Path
 from typing import List, Optional, Union
 
 import pandas as pd
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
 from AnalystStack.io.utils import parse_excel_cell
 from AnalystStack.utils.logging import get_logger
@@ -66,7 +68,46 @@ class DataReader:
         logger.info(f"Reading Parquet: {file_path}")
         return pd.read_parquet(file_path, columns=columns, **kwargs)
 
-    def jinja(self, folder: str, template_name: str, **kwargs):
-        env = Environment(loader=FileSystemLoader(folder))
-        template = env.get_template(template_name)
-        return template.render(**kwargs)
+    def jinja(self, source: str, **context) -> str:
+        """Render a Jinja2 template and return the resulting string.
+
+        ``source`` can be either:
+
+        * a path to a template file, e.g. ``"queries/sales.sql.j2"``, or
+        * a raw template string, e.g. ``"SELECT * FROM {{ table }}"``.
+
+        Existing files are loaded from disk (so ``{% include %}`` / ``{% extends %}``
+        of sibling templates work); anything else is treated as an inline template
+        string. Template variables are supplied as keyword arguments.
+
+        Args:
+            source: Path to a template file or an inline template string.
+            **context: Variables made available to the template.
+
+        Returns:
+            The rendered template as a string.
+
+        Raises:
+            jinja2.UndefinedError: If the template references a variable that was
+                not supplied (templates are rendered with ``StrictUndefined``).
+        """
+        if os.path.isfile(source):
+            path = Path(source)
+            logger.info(f"Rendering Jinja template file: {source}")
+            env = Environment(
+                loader=FileSystemLoader(str(path.parent)),
+                undefined=StrictUndefined,
+                keep_trailing_newline=True,
+                autoescape=False,
+            )
+            template = env.get_template(path.name)
+        else:
+            logger.info("Rendering Jinja template from inline string.")
+            env = Environment(
+                undefined=StrictUndefined,
+                keep_trailing_newline=True,
+                autoescape=False,
+            )
+            template = env.from_string(source)
+
+        return template.render(**context)

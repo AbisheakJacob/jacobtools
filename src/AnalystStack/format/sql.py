@@ -20,8 +20,9 @@ class SQLFormatter:
         self.templater = templater
         self.config_path = config_path
 
-        # Build the configuration override dictionary
-        self.config_overrides = {"core": {"dialect": self.dialect, "templater": self.templater}}
+        # Build the configuration override dictionary. SQLFluff expects a flat
+        # mapping of config keys (not nested under a "core" section).
+        self.config_overrides: Dict[str, Any] = {"dialect": self.dialect, "templater": self.templater}
 
         # If the user has a .sqlfluff file (e.g., in their repo root), point to it
         if self.config_path and os.path.exists(self.config_path):

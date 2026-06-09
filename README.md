@@ -1,75 +1,125 @@
-# AnalyticsStack
+# AnalystStack
 
-**AnalyticsStack** is a my personal python library that contains code to automate day to day activities.
+[![CI](https://github.com/AbisheakJacob/AnalystStack/actions/workflows/workflow.yml/badge.svg)](https://github.com/AbisheakJacob/AnalystStack/actions/workflows/workflow.yml)
+[![PyPI](https://img.shields.io/pypi/v/AnalystStack.svg)](https://pypi.org/project/AnalystStack/)
+[![Python](https://img.shields.io/pypi/pyversions/AnalystStack.svg)](https://pypi.org/project/AnalystStack/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Docs](https://img.shields.io/badge/docs-zensical-blue.svg)](https://abisheakjacob.github.io/AnalystStack/)
 
-## Installation and updating
+**AnalystStack** is a Python toolkit of reusable helpers for the work data analysts do every
+day: connecting to data warehouses, reading and writing files, rendering SQL from templates,
+and formatting code. It replaces the pile of copy-pasted snippets every analyst accumulates
+with a small, tested, `pip install`-able package.
 
-Installing the package from PyPI
+📖 **Full documentation:** <https://abisheakjacob.github.io/AnalystStack/>
+
+## Installation
 
 ```bash
+# From PyPI
 pip install AnalystStack
+
+# With the BigQuery connector
+pip install "AnalystStack[bigquery]"
+
+# From GitHub
+pip install "git+https://github.com/AbisheakJacob/AnalystStack"
 ```
 
-OR
+## Quickstart
 
-Installing the package from the github repository
+```python
+from AnalystStack import io
 
-```bash
-pip install git+https://github.com/AbisheakJacob/AnalyticsStack
+# Render SQL from an inline Jinja template...
+query = io.read.jinja("SELECT * FROM {{ table }} WHERE region = '{{ region }}'",
+                      table="sales", region="APAC")
+
+# ...or from a template file on disk.
+query = io.read.jinja("queries/monthly_sales.sql.j2", month="2026-05")
+
+# Read an Excel range, write it back out as Markdown.
+df = io.read.excel("report.xlsx", sheet_name="Data", start_cell="B2", end_cell="F100")
+io.write.markdown(df, "summary.md")
 ```
 
-Installing the local repository so that it updates automatically when a change is made.
+```python
+from AnalystStack.connectors import GoogleBigQueryConnector
 
-```bash
-pip install .
+bq = GoogleBigQueryConnector(gcp_project_id="my-project")
+df = bq.read_data("SELECT * FROM dataset.table LIMIT 100")
+fill = bq.get_fillrate("dataset", "table")   # column completion %
 ```
 
-
-## Structure
+## Modules
 
 ### Connectors
 
-This module contains codes to connect and work with data in Google BigQuery and Databricks.
+Read, write and profile tables in cloud data warehouses ([docs](https://abisheakjacob.github.io/AnalystStack/connectors/)).
 
-| Function Name     | Description                                        |
-| ----------------- | -------------------------------------------------- |
-| read_data         | Read a table from database as a DataFrame               |
-| write_data | Write data to database from DataFrame |
-| get_all_table_names | Get all table names in a given project/catalog |
-| get_datatypes | Get the datatypes for all columns in a table |
-| get_fillrate | Get Fill Rate Analyssi for all the columns in a table |
+| Method | Description |
+| ------ | ----------- |
+| `read_data(query)` | Run a query and return a DataFrame. |
+| `write_data(df, dataset_id, table_id, if_exists="append")` | Write a DataFrame to a table. |
+| `get_all_table_names(dataset_id)` | List tables in a dataset. |
+| `get_datatypes(dataset_id, table_id)` | `{column: data_type}` for a table. |
+| `get_fillrate(dataset_id, table_id)` | `{column: % non-null}` for a table. |
 
-### Format
-
-This module support formatting python code or SQL queries.
-
-| Function Name          | Description                                                                 |
-| ---------------------- | --------------------------------------------------------------------------- |
-| pyton | Format python code                    |
-| sql         | Format SQL code |
+Google BigQuery is supported today; a Databricks connector is in progress.
 
 ### IO
 
-This module makes it easier to read and write data.
+Read and write data, and render Jinja templates ([docs](https://abisheakjacob.github.io/AnalystStack/io/)).
 
-#### postgres
+| Method | Description |
+| ------ | ----------- |
+| `read.excel` / `read.csv` / `read.parquet` | Read files into DataFrames. |
+| `read.jinja(source, **context)` | Render a Jinja template from a **file path or string**. |
+| `write.excel` / `write.csv` | Write DataFrames to files. |
+| `write.markdown` / `write.txt` | Write a DataFrame or string to Markdown / text. |
+| `write.clipboard` | Copy a DataFrame or string to the OS clipboard. |
 
-| Function Name             | Description                                                        |
-| ------------------------- | ------------------------------------------------------------------ |
-| reader.excel | read data from an excel |
-| reader.csv | read data from a csv |
-| writer.exel | write data to excel |
-| writer.csv | Write data to csv |
-| writer.markdown | write tables and string to markdown |
-| writer.txt | write tables and string to text file |
-| writer.clipboard | copy data to clipboard |
+### Formatting
 
-## Next Steps
+Format and lint code from Python or the CLI ([docs](https://abisheakjacob.github.io/AnalystStack/formatting/)).
 
-1. Custom function to perform basic eda on a given dataframe (info, null values, shape, size)
-2. Function to perform match% analysis and perfrom a venn diagram for easier visualization
+| Class | Description |
+| ----- | ----------- |
+| `PythonFormatter` | Format and syntax-check Python with Black + `ast`. |
+| `SQLFormatter` | Format and lint SQL with SQLFluff. |
+
+```bash
+# CLI
+analyststack format python path/to/file.py          # format in place
+analyststack format sql    path/to/query.sql --lint  # lint only
+```
+
+## Development
+
+```bash
+git clone https://github.com/AbisheakJacob/AnalystStack
+cd AnalystStack
+pip install -r requirements.txt        # editable install with dev + bigquery extras
+```
+
+Common tasks (see the `Makefile`):
+
+| Command | Description |
+| ------- | ----------- |
+| `make check` | Run format, lint, type-check and tests. |
+| `make test` | Run the test suite with coverage. |
+| `make format` / `make lint` / `make typecheck` | Individual quality gates. |
+| `make build` | Build the sdist and wheel. |
+| `make docs` | Build the documentation site. |
+
+The same gates run in CI via [tox](https://tox.wiki/) (`tox -e format,lint,typecheck`,
+`tox -e py312,py313`).
+
+## Roadmap
+
+Planned work — and recently closed gaps — live on the
+[roadmap](https://abisheakjacob.github.io/AnalystStack/next-steps/).
 
 ## License
 
-**_The Reference to this library can be found here:_**
-The base construct of this library is referenced from [this article](https://mikehuls.medium.com/create-your-custom-python-package-that-you-can-pip-install-from-your-git-repository-f90465867893)
+Released under the [MIT License](LICENSE).
