@@ -2,16 +2,15 @@
 
 import os
 from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass
 class BigQuerySettings:
     """Manages default settings for the BigQuery environment."""
 
-    gcp_project_id: Optional[str] = os.getenv("GCP_PROJECT_ID")
-    gbq_project_id: Optional[str] = os.getenv("GBQ_PROJECT_ID")
-    credentials_path: Optional[str] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+    gcp_project_id: str | None = os.getenv("GCP_PROJECT_ID")
+    gbq_project_id: str | None = os.getenv("GBQ_PROJECT_ID")
+    credentials_path: str | None = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
     location: str = os.getenv("BQ_LOCATION", "US")
 
 
@@ -19,6 +18,17 @@ class BigQuerySettings:
 class DatabricksSettings:
     """Manages default settings for the Databricks environment."""
 
-    server_hostname: Optional[str] = os.getenv("DATABRICKS_SERVER_HOSTNAME")
-    http_path: Optional[str] = os.getenv("DATABRICKS_HTTP_PATH")
-    access_token: Optional[str] = os.getenv("DATABRICKS_ACCESS_TOKEN")
+    server_hostname: str | None = os.getenv("DATABRICKS_SERVER_HOSTNAME")
+    http_path: str | None = os.getenv("DATABRICKS_HTTP_PATH")
+    access_token: str | None = os.getenv("DATABRICKS_ACCESS_TOKEN")
+
+
+@dataclass
+class PostgresSettings:
+    """Manages default settings for the Databricks environment"""
+
+    host: str | None = os.getenv("POSTGRES_HOST")
+    port: str | None = os.getenv("POSTGRES_PORT")
+    database: str | None = os.getenv("POSTGRES_DATABASE")
+    user: str | None = os.getenv("POSTGRES_USER")
+    password: str | None = os.getenv("POSTGRES_PASSWORD")

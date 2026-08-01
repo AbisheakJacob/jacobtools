@@ -1,6 +1,5 @@
 """Dedicated to executing SQL and moving data"""
 
-from typing import Optional
 import pandas as pd
 from google.cloud import bigquery
 
@@ -14,7 +13,9 @@ logger = get_logger(__name__)
 class QueryManager:
     """Handles read and write data operations to BigQuery."""
 
-    def __init__(self, client_wrapper: BigQueryClientWrapper, gbq_project_id: Optional[str] = None):
+    def __init__(
+        self, client_wrapper: BigQueryClientWrapper, gbq_project_id: str | None = None
+    ):
         self.wrapper = client_wrapper
         self.gbq_project_id = gbq_project_id
 
@@ -22,11 +23,18 @@ class QueryManager:
         try:
             logger.debug(f"Executing read query: {query[:100]}...")
             return self.wrapper.client.query(query).to_dataframe()
-        except Exception as e:
-            raise QueryExecutionError(f"Query execution failed: {e}")
+        except QueryExecutionError as e:
+            logger.error(f"Query execution failed: {e}")
+            raise
 
-    def execute_write(self, df: pd.DataFrame, dataset_id: str, table_id: str, if_exists: str = "append") -> None:
-        table_ref = f"{self.gbq_project_id}.{dataset_id}.{table_id}"
+    def execute_write(
+        self,
+        df: pd.DataFrame,
+        schema: str,
+        table_id: str,
+        if_exists: str = "append",
+    ) -> None:
+        table_ref = f"{self.gbq_project_id}.{schema}.{table_id}"
 
         write_disp = (
             bigquery.WriteDisposition.WRITE_TRUNCATE
@@ -38,8 +46,11 @@ class QueryManager:
 
         try:
             logger.info(f"Writing {len(df)} rows to {table_ref} ({if_exists})...")
-            job = self.wrapper.client.load_table_from_dataframe(df, table_ref, job_config=job_config)
+            job = self.wrapper.client.load_table_from_dataframe(
+                df, table_ref, job_config=job_config
+            )
             job.result()
             logger.info(f"Write complete for {table_ref}.")
-        except Exception as e:
-            raise QueryExecutionError(f"Failed to write DataFrame to {table_ref}: {e}")
+        except QueryExecutionError as e:
+            logger.error(f"Failed to write DataFrame to {table_ref}: {e}")
+            raise

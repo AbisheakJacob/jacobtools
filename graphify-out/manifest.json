@@ -1,0 +1,297 @@
+{
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.claude\\settings.json": {
+    "mtime": 1782113461.9423401,
+    "ast_hash": "7bf81dca0376bde3a32244b82bc7cbc0",
+    "semantic_hash": "7bf81dca0376bde3a32244b82bc7cbc0"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.claude\\settings.local.json": {
+    "mtime": 1781001288.5919845,
+    "ast_hash": "339a90dc050a111b40322a7997268c92",
+    "semantic_hash": "339a90dc050a111b40322a7997268c92"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\pyproject.toml": {
+    "mtime": 1776764318.0166469,
+    "ast_hash": "1954eb68923b2b7ef10773211012c108",
+    "semantic_hash": "1954eb68923b2b7ef10773211012c108"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\__init__.py": {
+    "mtime": 1781000117.041667,
+    "ast_hash": "fd06d24cc458f4ec95e8ddff154e5fcd",
+    "semantic_hash": "fd06d24cc458f4ec95e8ddff154e5fcd"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\__main__.py": {
+    "mtime": 1776764318.197172,
+    "ast_hash": "cdb86fe0a3a1c6a1a1e3060e376de7b2",
+    "semantic_hash": "cdb86fe0a3a1c6a1a1e3060e376de7b2"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\cli.py": {
+    "mtime": 1781000087.56177,
+    "ast_hash": "aae24cc488b7d14ab0b62a009faab14b",
+    "semantic_hash": "aae24cc488b7d14ab0b62a009faab14b"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\config\\__init__.py": {
+    "mtime": 1776764318.212972,
+    "ast_hash": "f7ce44f370298c7562bf1b184c13a220",
+    "semantic_hash": "f7ce44f370298c7562bf1b184c13a220"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\config\\settings.py": {
+    "mtime": 1776764318.212972,
+    "ast_hash": "c8fd6f9ef5012c47146f12b7b9ebd018",
+    "semantic_hash": "c8fd6f9ef5012c47146f12b7b9ebd018"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\__init__.py": {
+    "mtime": 1776764318.212972,
+    "ast_hash": "206171468f535094f49a5b052c5a384f",
+    "semantic_hash": "206171468f535094f49a5b052c5a384f"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\base.py": {
+    "mtime": 1776779606.0784447,
+    "ast_hash": "f5b66fdfc549d9089706c27230ae3989",
+    "semantic_hash": "f5b66fdfc549d9089706c27230ae3989"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\bigquery\\__init__.py": {
+    "mtime": 1776764318.2287166,
+    "ast_hash": "7d18b37caf3d066d62ca534694851ed6",
+    "semantic_hash": "7d18b37caf3d066d62ca534694851ed6"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\bigquery\\client.py": {
+    "mtime": 1781002442.7544048,
+    "ast_hash": "ae48a8e1483ce29bd62bfab74fe4c00d",
+    "semantic_hash": "ae48a8e1483ce29bd62bfab74fe4c00d"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\bigquery\\connector.py": {
+    "mtime": 1776779606.0784447,
+    "ast_hash": "74e9f768bbbcb62b9284bf5a8456b27a",
+    "semantic_hash": "74e9f768bbbcb62b9284bf5a8456b27a"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\bigquery\\metadata.py": {
+    "mtime": 1776779606.0784447,
+    "ast_hash": "6da5661e0bc41e0ace907ba82f3ed614",
+    "semantic_hash": "6da5661e0bc41e0ace907ba82f3ed614"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\bigquery\\profiling.py": {
+    "mtime": 1776779606.0945835,
+    "ast_hash": "bfbbbb2a71ede2a200dc9f15e77e8298",
+    "semantic_hash": "bfbbbb2a71ede2a200dc9f15e77e8298"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\bigquery\\query.py": {
+    "mtime": 1776779606.0945835,
+    "ast_hash": "d4ae55be38ebbb171276fb511c2bf7ef",
+    "semantic_hash": "d4ae55be38ebbb171276fb511c2bf7ef"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\bigquery\\utils.py": {
+    "mtime": 1776764318.276485,
+    "ast_hash": "284fe5100e34e408afb2e8daf47fc0c1",
+    "semantic_hash": "284fe5100e34e408afb2e8daf47fc0c1"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\databricks\\__init__.py": {
+    "mtime": 1776764318.2790153,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\databricks\\client.py": {
+    "mtime": 1776779606.1101425,
+    "ast_hash": "63ac274ac7952d516adaec121ef72eb0",
+    "semantic_hash": "63ac274ac7952d516adaec121ef72eb0"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\databricks\\connector.py": {
+    "mtime": 1776779606.1101425,
+    "ast_hash": "8750e7f2dbb3d204fd9a222755898af8",
+    "semantic_hash": "8750e7f2dbb3d204fd9a222755898af8"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\databricks\\metadata.py": {
+    "mtime": 1776779606.1262295,
+    "ast_hash": "c87494bf479ea3744d88d236e0beb38a",
+    "semantic_hash": "c87494bf479ea3744d88d236e0beb38a"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\connectors\\databricks\\query.py": {
+    "mtime": 1776779606.1262295,
+    "ast_hash": "402458726a3ac0859d8bd716c7a74ac3",
+    "semantic_hash": "402458726a3ac0859d8bd716c7a74ac3"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\exceptions\\errors.py": {
+    "mtime": 1776764318.3083792,
+    "ast_hash": "f7c3df5fb3605fbcead54a24cbbf40ca",
+    "semantic_hash": "f7c3df5fb3605fbcead54a24cbbf40ca"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\format\\__init__.py": {
+    "mtime": 1776944392.1319547,
+    "ast_hash": "280d3df861d46260f9881f380b1d3be4",
+    "semantic_hash": "280d3df861d46260f9881f380b1d3be4"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\format\\python.py": {
+    "mtime": 1776764318.324196,
+    "ast_hash": "220543dbbe7de7e97b31e14ac825b018",
+    "semantic_hash": "220543dbbe7de7e97b31e14ac825b018"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\format\\sql.py": {
+    "mtime": 1780999960.6992426,
+    "ast_hash": "8e98432f2a0da3f978046a6e0c59032a",
+    "semantic_hash": "8e98432f2a0da3f978046a6e0c59032a"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\io\\__init__.py": {
+    "mtime": 1776764318.340231,
+    "ast_hash": "bcf5d381faafec44e1c55fdaffa4d257",
+    "semantic_hash": "bcf5d381faafec44e1c55fdaffa4d257"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\io\\reader.py": {
+    "mtime": 1780999919.2578988,
+    "ast_hash": "a090e7a6991e54eb9d93b7b952c08648",
+    "semantic_hash": "a090e7a6991e54eb9d93b7b952c08648"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\io\\utils.py": {
+    "mtime": 1780999338.8113108,
+    "ast_hash": "d16a5c05f80b70a79d943c0c8c29cae5",
+    "semantic_hash": "d16a5c05f80b70a79d943c0c8c29cae5"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\io\\writer.py": {
+    "mtime": 1780999801.5712154,
+    "ast_hash": "fa5648e143b36df16e225618459de7fe",
+    "semantic_hash": "fa5648e143b36df16e225618459de7fe"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\utils\\logging.py": {
+    "mtime": 1776764318.3561585,
+    "ast_hash": "ab149523fc164e6869192a9e8d4986da",
+    "semantic_hash": "ab149523fc164e6869192a9e8d4986da"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\src\\AnalystStack\\utils\\validation.py": {
+    "mtime": 1776779606.14221,
+    "ast_hash": "63766e1e4347650f16ae90fd16f436ca",
+    "semantic_hash": "63766e1e4347650f16ae90fd16f436ca"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\test\\conftest.py": {
+    "mtime": 1780999448.6833017,
+    "ast_hash": "b07a9afa5ca65653ddea4a0f9a834db3",
+    "semantic_hash": "b07a9afa5ca65653ddea4a0f9a834db3"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\test\\connectors\\test_bigquery.py": {
+    "mtime": 1780999791.7653039,
+    "ast_hash": "2d8ed8cb4e154b946987d5ecfbe07425",
+    "semantic_hash": "2d8ed8cb4e154b946987d5ecfbe07425"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\test\\format\\test_format_python.py": {
+    "mtime": 1780999490.411891,
+    "ast_hash": "a924b64764998982790fac46f09c4d0b",
+    "semantic_hash": "a924b64764998982790fac46f09c4d0b"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\test\\io\\test_io_reader.py": {
+    "mtime": 1780999791.7277582,
+    "ast_hash": "d2a523f67ae14dd707647ad4b63549bb",
+    "semantic_hash": "d2a523f67ae14dd707647ad4b63549bb"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\test\\io\\test_io_utils.py": {
+    "mtime": 1780999455.0814698,
+    "ast_hash": "3c7e413474215654cbe2b824e74a2f97",
+    "semantic_hash": "3c7e413474215654cbe2b824e74a2f97"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\test\\io\\test_io_writer.py": {
+    "mtime": 1780999794.890916,
+    "ast_hash": "e723f20f18fdebc1cf8fcfc65e183501",
+    "semantic_hash": "e723f20f18fdebc1cf8fcfc65e183501"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\test\\test_cli.py": {
+    "mtime": 1781000101.8587706,
+    "ast_hash": "ef13f398675b22a5f1a8c79a59f7d950",
+    "semantic_hash": "ef13f398675b22a5f1a8c79a59f7d950"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.claude\\CLAUDE.md": {
+    "mtime": 1782113250.5002792,
+    "ast_hash": "817fe671013b35ae0bc9301dfe449a87",
+    "semantic_hash": "817fe671013b35ae0bc9301dfe449a87"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.claude\\skills\\graphify\\SKILL.md": {
+    "mtime": 1782113252.3271592,
+    "ast_hash": "97c2755905a5a0e53b96b31c725a7010",
+    "semantic_hash": "97c2755905a5a0e53b96b31c725a7010"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.claude\\skills\\graphify\\references\\add-watch.md": {
+    "mtime": 1781601421.4170053,
+    "ast_hash": "0df0589623217ca38a12bdcabfb42f4c",
+    "semantic_hash": "0df0589623217ca38a12bdcabfb42f4c"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.claude\\skills\\graphify\\references\\exports.md": {
+    "mtime": 1781601421.4374466,
+    "ast_hash": "c04ddf8f1f5ef5e262ebec491a523c74",
+    "semantic_hash": "c04ddf8f1f5ef5e262ebec491a523c74"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.claude\\skills\\graphify\\references\\extraction-spec.md": {
+    "mtime": 1781601421.4507713,
+    "ast_hash": "24808b03abfeaf5f6435bb69c0125b2c",
+    "semantic_hash": "24808b03abfeaf5f6435bb69c0125b2c"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.claude\\skills\\graphify\\references\\github-and-merge.md": {
+    "mtime": 1781601421.4507713,
+    "ast_hash": "cde13df085e4c492aeb7ba298a996d0d",
+    "semantic_hash": "cde13df085e4c492aeb7ba298a996d0d"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.claude\\skills\\graphify\\references\\hooks.md": {
+    "mtime": 1781601421.4645967,
+    "ast_hash": "3f545db6ce646650bb9de588f5512a27",
+    "semantic_hash": "3f545db6ce646650bb9de588f5512a27"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.claude\\skills\\graphify\\references\\query.md": {
+    "mtime": 1781601421.4645967,
+    "ast_hash": "8b40ed8c9e9060fc215219a8fc964091",
+    "semantic_hash": "8b40ed8c9e9060fc215219a8fc964091"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.claude\\skills\\graphify\\references\\transcribe.md": {
+    "mtime": 1781601421.4823472,
+    "ast_hash": "70f6aa30d6211f3a2c7e9fc45479f50c",
+    "semantic_hash": "70f6aa30d6211f3a2c7e9fc45479f50c"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.claude\\skills\\graphify\\references\\update.md": {
+    "mtime": 1781601421.4961598,
+    "ast_hash": "0dad167a95bdb389f02fecffb60b1bc8",
+    "semantic_hash": "0dad167a95bdb389f02fecffb60b1bc8"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.github\\workflows\\docs.yml": {
+    "mtime": 1780999268.0344002,
+    "ast_hash": "3553038fbf962b80d9156dca6dd0574c",
+    "semantic_hash": "3553038fbf962b80d9156dca6dd0574c"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\.github\\workflows\\workflow.yml": {
+    "mtime": 1781000545.8345275,
+    "ast_hash": "66641abb3354069200b6b6a8adf9855a",
+    "semantic_hash": "66641abb3354069200b6b6a8adf9855a"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\CLAUDE.md": {
+    "mtime": 1782113250.5342798,
+    "ast_hash": "8a6643a420fdad6bfb583523bc6cef16",
+    "semantic_hash": "8a6643a420fdad6bfb583523bc6cef16"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\README.md": {
+    "mtime": 1781000337.0560963,
+    "ast_hash": "21fffe593ead1285489fb8942cf44261",
+    "semantic_hash": "21fffe593ead1285489fb8942cf44261"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\docs\\docs\\connectors.md": {
+    "mtime": 1780999204.9479034,
+    "ast_hash": "39efd06cad3ea5b13cdb43a6a0960f6f",
+    "semantic_hash": "39efd06cad3ea5b13cdb43a6a0960f6f"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\docs\\docs\\formatting.md": {
+    "mtime": 1780999232.7383058,
+    "ast_hash": "01377bc8a13c31a166448fed7b25b9df",
+    "semantic_hash": "01377bc8a13c31a166448fed7b25b9df"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\docs\\docs\\index.md": {
+    "mtime": 1780999192.137146,
+    "ast_hash": "d26b98a33ebd6a50e9bbf406a0336bf2",
+    "semantic_hash": "d26b98a33ebd6a50e9bbf406a0336bf2"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\docs\\docs\\io.md": {
+    "mtime": 1780999220.5987713,
+    "ast_hash": "8f7d897a80d83e75c50c93da6c058e86",
+    "semantic_hash": "8f7d897a80d83e75c50c93da6c058e86"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\docs\\docs\\next-steps.md": {
+    "mtime": 1781000143.4786167,
+    "ast_hash": "fd15298348b28593214e194df140ff65",
+    "semantic_hash": "fd15298348b28593214e194df140ff65"
+  },
+  "C:\\Users\\abisheakjacob.j\\Documents\\01 Projects\\AnalystStack\\requirements.txt": {
+    "mtime": 1780999379.3882163,
+    "ast_hash": "8391ab914a1e5a1f477797643213a752",
+    "semantic_hash": "8391ab914a1e5a1f477797643213a752"
+  }
+}

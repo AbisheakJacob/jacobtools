@@ -1,7 +1,5 @@
 """Dedicated to heavy analyticial queries like calculating fill rates"""
 
-from typing import Dict, Optional
-
 from AnalystStack.connectors.bigquery.metadata import MetadataManager
 from AnalystStack.connectors.bigquery.query import QueryManager
 
@@ -10,14 +8,14 @@ class ProfilerManager:
     """Generates data quality statistics and profiles."""
 
     def __init__(
-        self, query_manager: QueryManager, metadata_manager: MetadataManager, gbq_project_id: Optional[str] = None
+        self, query_manager: QueryManager, metadata_manager: MetadataManager, gbq_project_id: str | None = None
     ):
         self.gbq_project_id = gbq_project_id
         self.query_manager = query_manager
         self.metadata_manager = metadata_manager
 
-    def calculate_fillrate(self, dataset_id: str, table_id: str) -> Dict[str, float]:
-        columns = self.metadata_manager.fetch_datatypes(dataset_id, table_id).keys()
+    def calculate_fillrate(self, schema: str, table_id: str) -> dict[str, float]:
+        columns = self.metadata_manager.fetch_datatypes(schema, table_id).keys()
         if not columns:
             return {}
 
@@ -27,7 +25,7 @@ class ProfilerManager:
         ]
 
         sql_select = ",\n".join(selects)
-        query = f"SELECT \n{sql_select} \nFROM `{self.gbq_project_id}.{dataset_id}.{table_id}`"
+        query = f"SELECT \n{sql_select} \nFROM `{self.gbq_project_id}.{schema}.{table_id}`"
 
         df = self.query_manager.execute_read(query)
         return df.iloc[0].to_dict() if not df.empty else {}

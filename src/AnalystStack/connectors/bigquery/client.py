@@ -2,8 +2,6 @@
 
 Isolates authentication and API connection logic"""
 
-from typing import Optional
-
 from google.cloud import bigquery
 
 from AnalystStack.exceptions.errors import ConnectionError
@@ -15,7 +13,7 @@ logger = get_logger(__name__)
 class BigQueryClientWrapper:
     """Wraps the native Google BigQuery client securely."""
 
-    def __init__(self, gcp_project_id: str, credentials_path: Optional[str] = None):
+    def __init__(self, gcp_project_id: str, credentials_path: str | None = None):
         self.gcp_project_id = gcp_project_id
         try:
             if credentials_path:
@@ -23,9 +21,9 @@ class BigQueryClientWrapper:
             else:
                 self._client = bigquery.Client(project=gcp_project_id)
             logger.info(f"BigQuery client initialized for project {self.gcp_project_id}")
-        except Exception as e:
+        except ConnectionError as e:
             logger.error(f"Failed to initialize BigQuery client: {e}")
-            raise ConnectionError(f"Client initialization failed: {e}")
+            raise
 
     @property
     def client(self) -> bigquery.Client:

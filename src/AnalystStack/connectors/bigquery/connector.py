@@ -4,8 +4,6 @@ This is what your end-users will interact with. it inherits from BaseConnectory 
 but it offloads the actual work to the managers
 """
 
-from typing import Dict, List, Optional
-
 import pandas as pd
 
 from AnalystStack.config.settings import BigQuerySettings
@@ -27,9 +25,9 @@ class GoogleBigQueryConnector(BaseConnector):
 
     def __init__(
         self,
-        gcp_project_id: Optional[str] = None,
-        gbq_project_id: Optional[str] = None,
-        credentials_path: Optional[str] = None,
+        gcp_project_id: str | None = None,
+        gbq_project_id: str | None = None,
+        credentials_path: str | None = None,
     ):
         # Fall back to environment settings if not explicitly provided
         settings = BigQuerySettings()
@@ -51,19 +49,25 @@ class GoogleBigQueryConnector(BaseConnector):
     def read_data(self, query: str) -> pd.DataFrame:
         return self._query_manager.execute_read(query)
 
-    def write_data(self, df: pd.DataFrame, dataset_id: str, table_id: str, if_exists: str = "append") -> None:
-        validate_table_reference(dataset_id, table_id)
-        self._query_manager.execute_write(df, dataset_id, table_id, if_exists)
+    def write_data(
+        self,
+        df: pd.DataFrame,
+        schema: str,
+        table_id: str,
+        if_exists: str = "append",
+    ) -> None:
+        validate_table_reference(schema, table_id)
+        self._query_manager.execute_write(df, schema, table_id, if_exists)
 
-    def get_all_table_names(self, dataset_id: str) -> List[str]:
-        return self._metadata_manager.fetch_tables(dataset_id)
+    def get_all_table_names(self, schema: str) -> list[str]:
+        return self._metadata_manager.fetch_tables(schema)
 
     # --- Expose Specific BigQuery Methods ---
 
-    def get_datatypes(self, dataset_id: str, table_id: str) -> Dict[str, str]:
+    def get_datatypes(self, schema: str, table_id: str) -> dict[str, str]:
         """Returns BigQuery specific data types for a table."""
-        return self._metadata_manager.fetch_datatypes(dataset_id, table_id)
+        return self._metadata_manager.fetch_datatypes(schema, table_id)
 
-    def get_fillrate(self, dataset_id: str, table_id: str) -> Dict[str, float]:
+    def get_fillrate(self, schema: str, table_id: str) -> dict[str, float]:
         """Calculates column-level completion percentage."""
-        return self._profiler_manager.calculate_fillrate(dataset_id, table_id)
+        return self._profiler_manager.calculate_fillrate(schema, table_id)
