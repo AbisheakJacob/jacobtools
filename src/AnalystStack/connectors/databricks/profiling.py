@@ -1,16 +1,13 @@
-"""Dedicated to heavy analyticial queries like calculating fill rates"""
+"""Dedicated to heavy analytical queries like calculating fill rates"""
 
-from AnalystStack.connectors.bigquery.metadata import MetadataManager
-from AnalystStack.connectors.bigquery.query import QueryManager
+from AnalystStack.connectors.databricks.metadata import MetadataManager
+from AnalystStack.connectors.databricks.query import QueryManager
 
 
 class ProfilerManager:
     """Generates data quality statistics and profiles."""
 
-    def __init__(
-        self, query_manager: QueryManager, metadata_manager: MetadataManager, gbq_project_id: str | None = None
-    ):
-        self.gbq_project_id = gbq_project_id
+    def __init__(self, query_manager: QueryManager, metadata_manager: MetadataManager):
         self.query_manager = query_manager
         self.metadata_manager = metadata_manager
 
@@ -25,7 +22,7 @@ class ProfilerManager:
         ]
 
         sql_select = ",\n".join(selects)
-        query = f"SELECT \n{sql_select} \nFROM `{self.gbq_project_id}.{schema}.{table_id}`"
+        query = f"SELECT \n{sql_select} \nFROM {schema}.{table_id}"
 
         df = self.query_manager.execute_read(query)
         return {str(key): float(value) for key, value in df.iloc[0].to_dict().items()} if not df.empty else {}

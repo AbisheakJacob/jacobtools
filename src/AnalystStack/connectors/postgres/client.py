@@ -2,16 +2,15 @@
 
 Isolates authentication and API connection logic"""
 
-import psycopg2
 from loguru import logger
-from psycopg2 import OperationalError
-from psycopg2.extensions import connection
+from sqlalchemy import create_engine
+from sqlalchemy.engine import URL, Engine
 
 from AnalystStack.exceptions.errors import ConnectionError
 
 
 class PostgresClientWrapper:
-    """Wraps the native Postgres client securely"""
+    """Wraps a SQLAlchemy engine (via the ``psycopg2`` driver) securely"""
 
     def __init__(
         self,
@@ -29,12 +28,22 @@ class PostgresClientWrapper:
         self.password = password
 
         try:
-            self._client = psycopg2.connect(host=host, port=port, database=database, user=user, password=password)
+            url = URL.create(
+                "postgresql+psycopg2",
+                username=user,
+                password=password,
+                host=host,
+                port=int(port) if port else None,
+                database=database,
+            )
+            self._engine: Engine = create_engine(url)
+            with self._engine.connect():
+                pass
             logger.info(f"Postgres client initialized for {self.host}:{self.port} - database: {self.database}")
-        except OperationalError as e:
+        except Exception as e:
             logger.error(f"Failed to initialize Postgres client: {e}")
             raise ConnectionError(f"Client initialization failed: {e}") from e
 
     @property
-    def client(self) -> connection:
-        return self._client
+    def engine(self) -> Engine:
+        return self._engine

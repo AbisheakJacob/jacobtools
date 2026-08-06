@@ -10,6 +10,7 @@ from AnalystStack.config.settings import PostgresSettings
 from AnalystStack.connectors.base import BaseConnector
 from AnalystStack.connectors.postgres.client import PostgresClientWrapper
 from AnalystStack.connectors.postgres.metadata import MetadataManager
+from AnalystStack.connectors.postgres.profiling import ProfileManager
 from AnalystStack.connectors.postgres.query import QueryManager
 from AnalystStack.exceptions.errors import ConfigurationError
 from AnalystStack.utils.validation import validate_table_reference
@@ -20,11 +21,11 @@ class PostgresConnector(BaseConnector):
 
     def __init__(
         self,
-        host: str,
-        port: str,
-        database: str,
-        user: str,
-        password: str,
+        host: str | None = None,
+        port: str | None = None,
+        database: str | None = None,
+        user: str | None = None,
+        password: str | None = None,
     ):
         # fallback to environment settings if not explicitly provided
         settings = PostgresSettings()
@@ -43,6 +44,7 @@ class PostgresConnector(BaseConnector):
         self._client_wrapper = PostgresClientWrapper(self.host, self.port, self.database, self.user, self.password)
         self._query_manager = QueryManager(self._client_wrapper)
         self._metadata_manager = MetadataManager(self._query_manager)
+        self._profile_manager = ProfileManager(self._query_manager, self._metadata_manager)
 
     def read_data(self, query: str) -> pd.DataFrame:
         return self._query_manager.execute_read(query)
@@ -53,3 +55,11 @@ class PostgresConnector(BaseConnector):
 
     def get_all_table_names(self, schema: str) -> list[str]:
         return self._metadata_manager.fetch_tables(schema)
+
+    def get_datatypes(self, schema: str, table_id: str) -> dict[str, str]:
+        """Returns Postgres specific data types for a table."""
+        return self._metadata_manager.fetch_datatypes(schema, table_id)
+
+    def get_fillrate(self, schema: str, table_id: str) -> dict[str, float]:
+        """Calculates column-level completion percentage."""
+        return self._profile_manager.calculate_fillrate(schema, table_id)

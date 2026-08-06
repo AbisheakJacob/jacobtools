@@ -21,6 +21,8 @@ class DatabricksSettings:
     server_hostname: str | None = os.getenv("DATABRICKS_SERVER_HOSTNAME")
     http_path: str | None = os.getenv("DATABRICKS_HTTP_PATH")
     access_token: str | None = os.getenv("DATABRICKS_ACCESS_TOKEN")
+    catalog: str | None = os.getenv("DATABRICKS_CATALOG")
+    schema: str | None = os.getenv("DATABRICKS_SCHEMA")
 
 
 @dataclass

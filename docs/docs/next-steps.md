@@ -16,18 +16,29 @@ The repo cleanup pass closed several long-standing gaps:
       uses plain-ASCII output so it doesn't crash on Windows consoles.
 - [x] **Entry point wired.** `analyststack` is installed as a console script.
 - [x] **Package `__init__` populated** with `__version__` and top-level conveniences
-      (`io`, `PythonFormatter`, `SQLFormatter`).
+      (`io`, `PythonFormatter`, `SQLFormatter`, `tidy`, `compare`, `validate`).
 - [x] **Real runtime dependencies declared** in `setup.cfg`, with optional extras
-      (`bigquery`, `databricks`, `dev`); the spurious `typer` dependency was removed.
+      (`bigquery`, `postgres`, `databricks`, `dev`); the spurious `typer` dependency was removed.
 - [x] **`SQLFormatter` config fixed** to pass a flat SQLFluff overrides mapping.
+- [x] **All connectors run on SQLAlchemy.** BigQuery, Postgres and Databricks each build a
+      SQLAlchemy `Engine` and read/write through `pandas.read_sql` / `DataFrame.to_sql`,
+      instead of driver-specific code paths.
+- [x] **Wire up the Databricks connector.** Exported from `connectors/__init__.py`, with a
+      working `read_data` / `write_data` / `get_all_table_names` / `get_datatypes` /
+      `get_fillrate`, and covered by tests.
+- [x] **Connector parity.** BigQuery, Postgres and Databricks now expose the same surface:
+      `read_data`, `write_data`, `get_all_table_names`, `get_datatypes`, `get_fillrate`.
+- [x] **`tidy` module** — `to_tidy` / `from_tidy` reshape DataFrames between wide and long.
+- [x] **`compare` module** — `compare_dataframes` (match-rate / overlap analysis) and
+      `summarize` (one-call EDA profile).
+- [x] **`validate` module** — declarative `Rule` / `Validator` for attaching checks to a
+      DataFrame before writing it out.
 
 ## :material-wrench: Correctness & wiring (do next)
 
 - [ ] **Reconcile `SQLFormatter` input.** `SQLFormatter.format_code` / `view_errors` take a
       **file path**, while `PythonFormatter` takes a **code string**. Make the interface
       consistent (accept a string, or accept both) so both formatters feel the same.
-- [ ] **Wire up the Databricks connector.** The `connectors/databricks` package exists but
-      isn't exported from `connectors/__init__.py` or covered by tests.
 
 ## :material-package-variant: Packaging & dependencies
 
@@ -38,24 +49,23 @@ The repo cleanup pass closed several long-standing gaps:
 
 ## :material-test-tube: Testing & quality
 
-- [x] Tests now mirror the package (`io`, `format`, `connectors`, `cli`) and the BigQuery
-      project-id mismatch is fixed.
-- [ ] Add a coverage gate (e.g. `--cov-fail-under=80`) once coverage stabilises — current
-      coverage is ~60%, with the Databricks connector and `format/sql.py` the main gaps.
+- [x] Tests now mirror the package (`io`, `format`, `connectors`, `cli`, `tidy`, `compare`,
+      `validate`) and the BigQuery project-id mismatch is fixed.
+- [x] Every connector (BigQuery, Postgres, Databricks) has its own test module, mocking
+      `sqlalchemy.create_engine` so no test needs real credentials or a network call.
+- [ ] Add a coverage gate (e.g. `--cov-fail-under=80`) once coverage stabilises.
 - [ ] Add tests for `SQLFormatter` and `DataReader.excel` / `DataWriter.excel`.
 
 ## :material-chart-box: Analyst features
 
 Carried over and expanded from the original project goals:
 
-- [ ] **`eda` helper** — one call that profiles a DataFrame: shape, dtypes, null counts,
-      cardinality, basic stats. Return a tidy summary DataFrame.
-- [ ] **Match-rate / overlap analysis** — compare key columns across two DataFrames and
-      report match %, plus an optional Venn diagram for quick visualisation.
-- [ ] **Connector parity** — bring Databricks to feature parity with BigQuery
-      (`read_data`, `write_data`, metadata, fill rate).
-- [ ] **Postgres / DuckDB reader** — the IO docs hint at a `postgres` source; a lightweight
-      local engine (DuckDB) would make examples runnable without cloud credentials.
+- [ ] **Optional Venn diagram** for `compare_dataframes` — a quick visual on top of the
+      existing match-rate / overlap numbers.
+- [ ] **DuckDB reader** — a lightweight local engine would make examples runnable without
+      cloud credentials.
+- [ ] **Pandera-style column schemas** — richer coercion / dtype-casting on top of the
+      current rule-based `validate` module, for users who want it.
 
 ## :material-book-open-variant: Docs & DX
 

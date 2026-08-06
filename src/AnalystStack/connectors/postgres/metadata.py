@@ -12,8 +12,8 @@ class MetadataManager:
     def fetch_tables(self, schema: str) -> list[str]:
         query = f"""
             SELECT table_name
-            FROM {schema}.INFORMATION_SCHEMA.TABLES
-            WHERE table_type = 'BASE TABLE'
+            FROM information_schema.tables
+            WHERE table_schema = '{schema}' AND table_type = 'BASE TABLE'
         """
         df = self.query_manager.execute_read(query)
         return df["table_name"].tolist() if not df.empty else []
@@ -21,8 +21,8 @@ class MetadataManager:
     def fetch_datatypes(self, schema, table_id) -> dict[str, str]:
         query = f"""
             SELECT column_name, data_type
-            FROM `{schema}.INFORMATION_SCHEMA.COLUMNS`
-            WHERE table_name = '{table_id}'
+            FROM information_schema.columns
+            WHERE table_schema = '{schema}' AND table_name = '{table_id}'
         """
         df = self.query_manager.execute_read(query)
         if df.empty:

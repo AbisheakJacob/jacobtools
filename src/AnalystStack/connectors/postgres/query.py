@@ -15,12 +15,12 @@ class QueryManager:
 
     def execute_read(self, query: str) -> pd.DataFrame:
         try:
-            logger.debug(f"Executing read query: {query[:100]}...")
-            return pd.read_sql(query, self.wrapper)
+            logger.info(f"Executing read query: {query[:100]}...")
+            return pd.read_sql(query, self.wrapper.engine)
 
-        except QueryExecutionError as e:
-            logger.error(f"Query execution failed: {e}")
-            raise
+        except Exception as e:
+            logger.exception("Query Execution Failed")
+            raise QueryExecutionError(f"Query execution failed: {e}") from e
 
     def execute_write(self, df: pd.DataFrame, dataset_id: str, table_id: str, if_exists: str = "append") -> None:
         table_ref = f"{dataset_id}.{table_id}"
@@ -30,9 +30,8 @@ class QueryManager:
 
         try:
             logger.info(f"Writing {len(df)} rows to {table_ref} ({if_exists})..")
-            df.to_sql(
-                name=table_id, con=self.wrapper, schema=dataset_id, if_exists=if_exists, index=False, method="multi"
-            )
+            df.to_sql(name=table_id, con=self.wrapper.engine, schema=dataset_id, if_exists=if_exists, index=False)
             logger.success(f"Write complete for {table_ref}.")
-        except QueryExecutionError as e:
-            logger.error(f"Failed to write Dataframe to {table_ref}: {e}")
+        except Exception as e:
+            logger.exception(f"Failed to write DataFrame to {table_ref}")
+            raise QueryExecutionError(f"Failed to write DataFrame to {table_ref}: {e}") from e

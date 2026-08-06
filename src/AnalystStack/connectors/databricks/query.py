@@ -18,24 +18,21 @@ class QueryManager:
     def execute_read(self, query: str) -> pd.DataFrame:
         try:
             logger.debug(f"Executing read query: {query[:100]}...")
-            with self.wrapper.client.cursor() as cursor:
-                return cursor.execute(query).fetchall_arrow().to_pandas()
+            return pd.read_sql(query, self.wrapper.engine)
         except Exception as e:
+            logger.exception("Query execution failed")
             raise QueryExecutionError(f"Query execution failed: {e}") from e
 
-    def execute_write(
-        self, df: pd.DataFrame, catalog: str, schema: str, table_id: str, if_exists: str = "append"
-    ) -> None:
-        table_ref = f"{catalog}.{schema}.{table_id}"
+    def execute_write(self, df: pd.DataFrame, schema: str, table_id: str, if_exists: str = "append") -> None:
+        table_ref = f"{self.wrapper.catalog}.{schema}.{table_id}"
+
+        if if_exists not in ("append", "replace", "fail"):
+            raise ValueError(f"Invalid if_exists value: {if_exists}")
 
         try:
-            logger.info(f"Writing {len(df)} rows to {table_ref} {if_exists}")
-
-            with self.wrapper.client.cursor() as cursor:
-                if if_exists == "replace":
-                    cursor.execute(f"DROP TABLE IF EXISTS {table_ref}")
-
-                cursor.write_pandas(df, table_ref, mode="over")
-
+            logger.info(f"Writing {len(df)} rows to {table_ref} ({if_exists})...")
+            df.to_sql(name=table_id, con=self.wrapper.engine, schema=schema, if_exists=if_exists, index=False)
+            logger.info(f"Write complete for {table_ref}.")
         except Exception as e:
-            raise QueryExecutionError(f"Query execution failed: {e}") from e
+            logger.exception(f"Failed to write DataFrame to {table_ref}")
+            raise QueryExecutionError(f"Failed to write DataFrame to {table_ref}: {e}") from e

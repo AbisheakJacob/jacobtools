@@ -1,0 +1,5 @@
+# Import the main class using a relative import (.)
+from .connector import DatabricksConnector
+
+# The __all__ variable strictly defines what gets exported if someone runs `from ... import *`
+__all__ = ["DatabricksConnector"]

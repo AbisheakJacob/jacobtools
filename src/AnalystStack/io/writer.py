@@ -1,5 +1,5 @@
 import os
-from typing import Any
+from typing import Any, cast
 
 import pandas as pd
 from openpyxl import load_workbook
@@ -71,7 +71,7 @@ class DataWriter:
     def _format_data(self, data: pd.DataFrame | Any, markdown: bool = False) -> str:
         """Internal helper to convert DF to string/markdown, or leave raw text as string."""
         if isinstance(data, pd.DataFrame):
-            return data.to_markdown(index=False) if markdown else data.to_string(index=False)
+            return cast(str, data.to_markdown(index=False) if markdown else data.to_string(index=False))
         return str(data)
 
     def markdown(self, data: pd.DataFrame | str, file_path: str, mode: str = "overwrite") -> None:

@@ -42,11 +42,24 @@ a small, tested, `pip install`-able package.
 
 -   :material-database: **[Connectors](connectors.md)**
 
-    Read, write and profile tables in Google BigQuery (Databricks in progress).
+    Read, write and profile tables in Google BigQuery, Postgres and Databricks — all backed
+    by SQLAlchemy.
 
 -   :material-swap-horizontal: **[IO](io.md)**
 
     Read/write Excel, CSV, Parquet, Markdown and text — plus a Jinja template renderer.
+
+-   :material-swap-vertical: **[Tidy data](tidy.md)**
+
+    Reshape DataFrames between wide and tidy (long) layouts.
+
+-   :material-compare-horizontal: **[Compare & summarize](compare.md)**
+
+    Diff two DataFrames by key, or profile one in a single call.
+
+-   :material-check-decagram: **[Validation](validate.md)**
+
+    Attach declarative sanity checks to a DataFrame and enforce them before a write.
 
 -   :material-format-paint: **[Formatting](formatting.md)**
 
@@ -83,6 +96,20 @@ from AnalystStack.connectors import GoogleBigQueryConnector
 bq = GoogleBigQueryConnector(gcp_project_id="my-project")
 df = bq.read_data("SELECT * FROM dataset.table LIMIT 100")
 fill = bq.get_fillrate("dataset", "table")   # column completion %
+```
+
+```python
+from AnalystStack import to_tidy, compare_dataframes, summarize, Validator, not_null
+
+# Reshape wide -> tidy for plotting or loading.
+tidy = to_tidy(df, id_vars="id", var_name="month", value_name="sales")
+
+# See what changed between two snapshots of the same table.
+diff = compare_dataframes(before, after, on="id")
+
+# One-call EDA profile, and a guard rail before writing back out.
+summarize(df)
+Validator([not_null("id")]).enforce(df)
 ```
 
 !!! tip "Configuration via environment variables"

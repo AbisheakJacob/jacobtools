@@ -1,7 +1,7 @@
 """Tests for AnalystStack.connectors.GoogleBigQueryConnector.
 
-The native ``google.cloud.bigquery.Client`` is patched so these tests never make a
-network call to GCP.
+``sqlalchemy.create_engine`` (and ``pandas.read_sql`` / ``DataFrame.to_sql``) are patched so
+these tests never make a network call to GCP.
 """
 
 from types import SimpleNamespace
@@ -11,7 +11,7 @@ import pandas as pd
 import pytest
 
 from AnalystStack.connectors import GoogleBigQueryConnector
-from AnalystStack.exceptions.errors import ConfigurationError, QueryExecutionError
+from AnalystStack.exceptions.errors import ConfigurationError, ConnectionError, QueryExecutionError, ValidationError
 
 GCP_PROJECT = "test-gcp-project-123"
 GBQ_PROJECT = "test-gbq-project-123"
@@ -22,18 +22,17 @@ GBQ_PROJECT = "test-gbq-project-123"
 
 
 @pytest.fixture
-def mock_bq_client():
-    """Patches the native BigQuery client used inside the client wrapper."""
-    with patch("AnalystStack.connectors.bigquery.client.bigquery.Client") as mock_client:
-        client_instance = MagicMock()
-        mock_client.return_value = client_instance
-        mock_client.from_service_account_json.return_value = client_instance
-        yield client_instance
+def mock_engine():
+    """Patches ``create_engine`` used inside the client wrapper."""
+    with patch("AnalystStack.connectors.bigquery.client.create_engine") as mock_create_engine:
+        engine_instance = MagicMock()
+        mock_create_engine.return_value = engine_instance
+        yield engine_instance
 
 
 @pytest.fixture
-def connector(mock_bq_client):
-    """A pre-initialised connector wired to the mocked client."""
+def connector(mock_engine):
+    """A pre-initialised connector wired to the mocked engine."""
     return GoogleBigQueryConnector(gcp_project_id=GCP_PROJECT, gbq_project_id=GBQ_PROJECT)
 
 
@@ -53,26 +52,34 @@ def test_initialization_missing_project_id(monkeypatch):
         GoogleBigQueryConnector(gcp_project_id=None)
 
 
+def test_initialization_wraps_engine_errors():
+    """A failure while creating/connecting the engine raises ConnectionError."""
+    with (
+        patch("AnalystStack.connectors.bigquery.client.create_engine", side_effect=RuntimeError("bad credentials")),
+        pytest.raises(ConnectionError, match="Client initialization failed"),
+    ):
+        GoogleBigQueryConnector(gcp_project_id=GCP_PROJECT)
+
+
 # ---------------------------------------------------------
 # read_data
 # ---------------------------------------------------------
 
 
-def test_read_data_success(connector, mock_bq_client, sample_dataframe):
-    mock_query_job = MagicMock()
-    mock_query_job.to_dataframe.return_value = sample_dataframe
-    mock_bq_client.query.return_value = mock_query_job
-
+def test_read_data_success(connector, mock_engine, sample_dataframe):
     query = "SELECT * FROM fake_table"
-    result_df = connector.read_data(query)
+    with patch("AnalystStack.connectors.bigquery.query.pd.read_sql", return_value=sample_dataframe) as mock_read_sql:
+        result_df = connector.read_data(query)
 
-    mock_bq_client.query.assert_called_once_with(query)
+    mock_read_sql.assert_called_once_with(query, mock_engine)
     pd.testing.assert_frame_equal(result_df, sample_dataframe)
 
 
-def test_read_data_failure(connector, mock_bq_client):
-    mock_bq_client.query.side_effect = Exception("GCP Network Timeout")
-    with pytest.raises(QueryExecutionError, match="Query execution failed: GCP Network Timeout"):
+def test_read_data_failure(connector, mock_engine):
+    with (
+        patch("AnalystStack.connectors.bigquery.query.pd.read_sql", side_effect=Exception("GCP Network Timeout")),
+        pytest.raises(QueryExecutionError, match="Query execution failed: GCP Network Timeout"),
+    ):
         connector.read_data("SELECT * FROM fake_table")
 
 
@@ -81,23 +88,23 @@ def test_read_data_failure(connector, mock_bq_client):
 # ---------------------------------------------------------
 
 
-def test_write_data_uses_gbq_project_in_table_ref(connector, mock_bq_client, sample_dataframe):
-    mock_load_job = MagicMock()
-    mock_bq_client.load_table_from_dataframe.return_value = mock_load_job
+def test_write_data_uses_engine(connector, mock_engine, sample_dataframe):
+    with patch("pandas.DataFrame.to_sql") as mock_to_sql:
+        connector.write_data(df=sample_dataframe, schema="test_dataset", table_id="test_table", if_exists="replace")
 
-    connector.write_data(df=sample_dataframe, dataset_id="test_dataset", table_id="test_table", if_exists="replace")
-
-    mock_bq_client.load_table_from_dataframe.assert_called_once()
-    args, _ = mock_bq_client.load_table_from_dataframe.call_args
-    assert args[1] == f"{GBQ_PROJECT}.test_dataset.test_table"
-    mock_load_job.result.assert_called_once()
+    mock_to_sql.assert_called_once_with(
+        name="test_table", con=mock_engine, schema="test_dataset", if_exists="replace", index=False
+    )
 
 
 def test_write_data_rejects_invalid_table_reference(connector, sample_dataframe):
-    from AnalystStack.exceptions.errors import ValidationError
-
     with pytest.raises(ValidationError):
-        connector.write_data(df=sample_dataframe, dataset_id="bad-dataset!", table_id="t")
+        connector.write_data(df=sample_dataframe, schema="bad-dataset!", table_id="t")
+
+
+def test_write_data_rejects_invalid_if_exists(connector, sample_dataframe):
+    with pytest.raises(ValueError, match="Invalid if_exists value"):
+        connector.write_data(df=sample_dataframe, schema="test_dataset", table_id="t", if_exists="bogus")
 
 
 # ---------------------------------------------------------
@@ -105,24 +112,17 @@ def test_write_data_rejects_invalid_table_reference(connector, sample_dataframe)
 # ---------------------------------------------------------
 
 
-def test_get_datatypes(connector, mock_bq_client):
+def test_get_datatypes(connector, mock_engine):
     schema_df = pd.DataFrame({"column_name": ["id", "name", "price"], "data_type": ["INT64", "STRING", "FLOAT64"]})
-    mock_query_job = MagicMock()
-    mock_query_job.to_dataframe.return_value = schema_df
-    mock_bq_client.query.return_value = mock_query_job
-
-    result = connector.get_datatypes("test_dataset", "test_table")
+    with patch("AnalystStack.connectors.bigquery.query.pd.read_sql", return_value=schema_df):
+        result = connector.get_datatypes("test_dataset", "test_table")
     assert result == {"id": "INT64", "name": "STRING", "price": "FLOAT64"}
 
 
-def test_get_fillrate(connector, mock_bq_client):
+def test_get_fillrate(connector, mock_engine):
     schema_df = pd.DataFrame({"column_name": ["id", "name"], "data_type": ["INT64", "STRING"]})
     fillrate_df = pd.DataFrame({"id": [100.0], "name": [95.5]})
 
-    job1, job2 = MagicMock(), MagicMock()
-    job1.to_dataframe.return_value = schema_df
-    job2.to_dataframe.return_value = fillrate_df
-    mock_bq_client.query.side_effect = [job1, job2]
-
-    result = connector.get_fillrate("test_dataset", "test_table")
+    with patch("AnalystStack.connectors.bigquery.query.pd.read_sql", side_effect=[schema_df, fillrate_df]):
+        result = connector.get_fillrate("test_dataset", "test_table")
     assert result == {"id": 100.0, "name": 95.5}

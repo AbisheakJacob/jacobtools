@@ -54,6 +54,9 @@ nav = [
   { "Home" = "index.md" },
   { "Connectors" = "connectors.md" },
   { "IO" = "io.md" },
+  { "Tidy data" = "tidy.md" },
+  { "Compare & summarize" = "compare.md" },
+  { "Validation" = "validate.md" },
   { "Formatting" = "formatting.md" },
   { "Roadmap / Next steps" = "next-steps.md" },
 ]

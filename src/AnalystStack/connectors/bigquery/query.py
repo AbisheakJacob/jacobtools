@@ -1,7 +1,6 @@
 """Dedicated to executing SQL and moving data"""
 
 import pandas as pd
-from google.cloud import bigquery
 
 from AnalystStack.connectors.bigquery.client import BigQueryClientWrapper
 from AnalystStack.exceptions.errors import QueryExecutionError
@@ -20,10 +19,10 @@ class QueryManager:
     def execute_read(self, query: str) -> pd.DataFrame:
         try:
             logger.debug(f"Executing read query: {query[:100]}...")
-            return self.wrapper.client.query(query).to_dataframe()
-        except QueryExecutionError as e:
-            logger.error(f"Query execution failed: {e}")
-            raise
+            return pd.read_sql(query, self.wrapper.engine)
+        except Exception as e:
+            logger.exception("Query execution failed")
+            raise QueryExecutionError(f"Query execution failed: {e}") from e
 
     def execute_write(
         self,
@@ -34,19 +33,13 @@ class QueryManager:
     ) -> None:
         table_ref = f"{self.gbq_project_id}.{schema}.{table_id}"
 
-        write_disp = (
-            bigquery.WriteDisposition.WRITE_TRUNCATE
-            if if_exists == "replace"
-            else bigquery.WriteDisposition.WRITE_APPEND
-        )
-
-        job_config = bigquery.LoadJobConfig(write_disposition=write_disp)
+        if if_exists not in ("append", "replace", "fail"):
+            raise ValueError(f"Invalid if_exists value: {if_exists}")
 
         try:
             logger.info(f"Writing {len(df)} rows to {table_ref} ({if_exists})...")
-            job = self.wrapper.client.load_table_from_dataframe(df, table_ref, job_config=job_config)
-            job.result()
+            df.to_sql(name=table_id, con=self.wrapper.engine, schema=schema, if_exists=if_exists, index=False)
             logger.info(f"Write complete for {table_ref}.")
-        except QueryExecutionError as e:
-            logger.error(f"Failed to write DataFrame to {table_ref}: {e}")
-            raise
+        except Exception as e:
+            logger.exception(f"Failed to write DataFrame to {table_ref}")
+            raise QueryExecutionError(f"Failed to write DataFrame to {table_ref}: {e}") from e
