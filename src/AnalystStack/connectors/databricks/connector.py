@@ -4,11 +4,8 @@ This is what your end-users will interact with. it inherits from BaseConnectory 
 but it offloads the actual work to the managers
 """
 
-from typing import Optional
-
 from AnalystStack.config.settings import DatabricksSettings
 from AnalystStack.connectors.base import BaseConnector
-
 from AnalystStack.connectors.databricks.client import DatabricksClientWrapper
 from AnalystStack.exceptions.errors import ConfigurationError
 
@@ -20,7 +17,7 @@ class DatabricksConnector(BaseConnector):
     with multiple catalogs and schemas"""
 
     def __init__(
-        self, server_hostname: Optional[str] = None, http_path: Optional[str] = None, access_token: Optional[str] = None
+        self, server_hostname: str | None = None, http_path: str | None = None, access_token: str | None = None
     ):
 
         settings = DatabricksSettings()

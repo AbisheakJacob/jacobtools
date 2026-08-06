@@ -1,8 +1,8 @@
 import os
-from typing import Any, Union
+from typing import Any
 
-from openpyxl import load_workbook
 import pandas as pd
+from openpyxl import load_workbook
 
 from AnalystStack.io.utils import parse_excel_cell
 from AnalystStack.utils.logging import get_logger
@@ -63,18 +63,18 @@ class DataWriter:
         write_mode = "a" if mode == "append" else "w"
 
         # Only write the header if we are overwriting, OR if the file doesn't exist yet
-        write_header = True if write_mode == "w" or not os.path.exists(file_path) else False
+        write_header = bool(write_mode == "w" or not os.path.exists(file_path))
 
         df.to_csv(file_path, mode=write_mode, index=index, header=write_header)
         logger.info(f"Data {'appended' if write_mode == 'a' else 'written'} to {file_path}.")
 
-    def _format_data(self, data: Union[pd.DataFrame, Any], markdown: bool = False) -> str:
+    def _format_data(self, data: pd.DataFrame | Any, markdown: bool = False) -> str:
         """Internal helper to convert DF to string/markdown, or leave raw text as string."""
         if isinstance(data, pd.DataFrame):
             return data.to_markdown(index=False) if markdown else data.to_string(index=False)
         return str(data)
 
-    def markdown(self, data: Union[pd.DataFrame, str], file_path: str, mode: str = "overwrite") -> None:
+    def markdown(self, data: pd.DataFrame | str, file_path: str, mode: str = "overwrite") -> None:
         """Writes DataFrame or raw text to a Markdown file."""
         write_mode = "a" if mode == "append" else "w"
         text_data = self._format_data(data, markdown=True)
@@ -83,7 +83,7 @@ class DataWriter:
             f.write(text_data + "\n\n")
         logger.info(f"Markdown written to {file_path}.")
 
-    def txt(self, data: Union[pd.DataFrame, str], file_path: str, mode: str = "overwrite") -> None:
+    def txt(self, data: pd.DataFrame | str, file_path: str, mode: str = "overwrite") -> None:
         """Writes DataFrame or raw text to a standard TXT file."""
         write_mode = "a" if mode == "append" else "w"
         text_data = self._format_data(data, markdown=False)
@@ -92,7 +92,7 @@ class DataWriter:
             f.write(text_data + "\n")
         logger.info(f"Text written to {file_path}.")
 
-    def clipboard(self, data: Union[pd.DataFrame, str]) -> None:
+    def clipboard(self, data: pd.DataFrame | str) -> None:
         """Copies DataFrame or text directly to the OS clipboard."""
         if isinstance(data, pd.DataFrame):
             data.to_clipboard(index=False)

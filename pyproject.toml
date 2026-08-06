@@ -2,12 +2,28 @@
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.black]
-line-length = 120
-target-version = ["py313"]
+# [tool.black]
+# line-length = 120
+# target-version = ["py313"]
 
 [tool.ruff]
 line-length = 120
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "B",
+    "UP",
+    "SIM",
+]
+
+ignore = []
 
 [tool.ruff.format]
 quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+

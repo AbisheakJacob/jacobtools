@@ -31,12 +31,7 @@ class QueryManager:
         try:
             logger.info(f"Writing {len(df)} rows to {table_ref} ({if_exists})..")
             df.to_sql(
-                name=table_id,
-                con=self.wrapper,
-                schema=dataset_id,
-                if_exists=if_exists,
-                index=False,
-                method='multi'
+                name=table_id, con=self.wrapper, schema=dataset_id, if_exists=if_exists, index=False, method="multi"
             )
             logger.success(f"Write complete for {table_ref}.")
         except QueryExecutionError as e:

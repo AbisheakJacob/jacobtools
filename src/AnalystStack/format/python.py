@@ -1,5 +1,4 @@
 import ast
-from typing import List
 
 import black
 
@@ -14,7 +13,7 @@ class PythonFormatter:
     def __init__(self, line_length: int = 100):
         self.mode = black.Mode(line_length=line_length)
 
-    def view_errors(self, code_string: str) -> List[str]:
+    def view_errors(self, code_string: str) -> list[str]:
         """
         Checks for fundamental Python syntax errors without executing the code.
         Returns a list of error messages (empty if clean).
@@ -41,9 +40,9 @@ class PythonFormatter:
 
             formatted_code = black.format_str(code_string, mode=self.mode)
             return formatted_code
-        except black.NothingChanged:
-            logger.info("Code is already formatted.")
-            return code_string
         except Exception as e:
+            if e.__class__.__name__ == "NothingChanged":
+                logger.info("Code is already formatted.")
+                return code_string
             logger.error(f"Black formatting failed (Check for syntax errors first): {e}")
             raise

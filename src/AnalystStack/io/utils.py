@@ -1,8 +1,7 @@
 import re
-from typing import Tuple
 
 
-def parse_excel_cell(cell: str) -> Tuple[int, int, str]:
+def parse_excel_cell(cell: str) -> tuple[int, int, str]:
     """
     Parses an Excel cell reference (e.g., 'C4') into 0-indexed row/col integers
     and returns the column letter.

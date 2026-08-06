@@ -21,7 +21,7 @@ class QueryManager:
             with self.wrapper.client.cursor() as cursor:
                 return cursor.execute(query).fetchall_arrow().to_pandas()
         except Exception as e:
-            raise QueryExecutionError(f"Query execution failed: {e}")
+            raise QueryExecutionError(f"Query execution failed: {e}") from e
 
     def execute_write(
         self, df: pd.DataFrame, catalog: str, schema: str, table_id: str, if_exists: str = "append"
@@ -32,11 +32,10 @@ class QueryManager:
             logger.info(f"Writing {len(df)} rows to {table_ref} {if_exists}")
 
             with self.wrapper.client.cursor() as cursor:
-
                 if if_exists == "replace":
                     cursor.execute(f"DROP TABLE IF EXISTS {table_ref}")
 
                 cursor.write_pandas(df, table_ref, mode="over")
 
         except Exception as e:
-            raise QueryExecutionError(f"Query execution failed: {e}")
+            raise QueryExecutionError(f"Query execution failed: {e}") from e

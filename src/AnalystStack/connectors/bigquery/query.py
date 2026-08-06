@@ -13,9 +13,7 @@ logger = get_logger(__name__)
 class QueryManager:
     """Handles read and write data operations to BigQuery."""
 
-    def __init__(
-        self, client_wrapper: BigQueryClientWrapper, gbq_project_id: str | None = None
-    ):
+    def __init__(self, client_wrapper: BigQueryClientWrapper, gbq_project_id: str | None = None):
         self.wrapper = client_wrapper
         self.gbq_project_id = gbq_project_id
 
@@ -46,9 +44,7 @@ class QueryManager:
 
         try:
             logger.info(f"Writing {len(df)} rows to {table_ref} ({if_exists})...")
-            job = self.wrapper.client.load_table_from_dataframe(
-                df, table_ref, job_config=job_config
-            )
+            job = self.wrapper.client.load_table_from_dataframe(df, table_ref, job_config=job_config)
             job.result()
             logger.info(f"Write complete for {table_ref}.")
         except QueryExecutionError as e:

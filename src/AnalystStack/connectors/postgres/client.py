@@ -29,16 +29,12 @@ class PostgresClientWrapper:
         self.password = password
 
         try:
-            self._client = psycopg2.connect(
-                host=host, port=port, database=database, user=user, password=password
-            )
-            logger.info(
-                f"Postgres client initialized for {self.host}:{self.port} - database: {self.database}"
-            )
+            self._client = psycopg2.connect(host=host, port=port, database=database, user=user, password=password)
+            logger.info(f"Postgres client initialized for {self.host}:{self.port} - database: {self.database}")
         except OperationalError as e:
             logger.error(f"Failed to initialize Postgres client: {e}")
-            raise ConnectionError(f"Client initialization failed: {e}")
+            raise ConnectionError(f"Client initialization failed: {e}") from e
 
-        @property
-        def client(self) -> connection:
-            return self._client
+    @property
+    def client(self) -> connection:
+        return self._client

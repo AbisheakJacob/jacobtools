@@ -46,9 +46,11 @@ def test_initialization_missing_project_id(monkeypatch):
     """A missing project id (arg and env) raises ConfigurationError."""
     monkeypatch.delenv("GCP_PROJECT_ID", raising=False)
     empty_settings = SimpleNamespace(gcp_project_id=None, gbq_project_id=None, credentials_path=None)
-    with patch("AnalystStack.connectors.bigquery.connector.BigQuerySettings", return_value=empty_settings):
-        with pytest.raises(ConfigurationError, match="A GCP project_id must be provided"):
-            GoogleBigQueryConnector(gcp_project_id=None)
+    with (
+        patch("AnalystStack.connectors.bigquery.connector.BigQuerySettings", return_value=empty_settings),
+        pytest.raises(ConfigurationError, match="A GCP project_id must be provided"),
+    ):
+        GoogleBigQueryConnector(gcp_project_id=None)
 
 
 # ---------------------------------------------------------

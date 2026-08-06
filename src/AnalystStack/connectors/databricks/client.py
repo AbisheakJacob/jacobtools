@@ -25,7 +25,7 @@ class DatabricksClientWrapper:
 
         except Exception as e:
             logger.error(f"Failed to initialize Databricks client: {e}")
-            raise ConnectionError(f"Client Initialization Falied: {e}")
+            raise ConnectionError(f"Client Initialization Falied: {e}") from e
 
     @property
     def client(self) -> sql.connnect:

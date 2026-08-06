@@ -27,4 +27,4 @@ class MetadataManager:
         df = self.query_manager.execute_read(query)
         if df.empty:
             return {}
-        return dict(zip(df["column_name"], df["data_type"]))
+        return dict(zip(df["column_name"], df["data_type"], strict=True))

@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from typing import List, Optional, Union
 
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
@@ -17,9 +16,9 @@ class DataReader:
     def excel(
         self,
         file_path: str,
-        sheet_name: Union[str, int] = 0,
+        sheet_name: str | int = 0,
         start_cell: str = "A1",
-        end_cell: Optional[str] = None,
+        end_cell: str | None = None,
         has_header: bool = True,
         **kwargs,
     ) -> pd.DataFrame:
@@ -63,7 +62,7 @@ class DataReader:
         logger.info(f"Reading CSV: {file_path}")
         return pd.read_csv(file_path, skiprows=skip_rows, sep=delimiter, header=0 if has_header else None, **kwargs)
 
-    def parquet(self, file_path: str, columns: Optional[List[str]] = None, **kwargs) -> pd.DataFrame:
+    def parquet(self, file_path: str, columns: list[str] | None = None, **kwargs) -> pd.DataFrame:
         """Reads Parquet files natively."""
         logger.info(f"Reading Parquet: {file_path}")
         return pd.read_parquet(file_path, columns=columns, **kwargs)

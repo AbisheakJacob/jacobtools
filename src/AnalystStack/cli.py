@@ -8,7 +8,7 @@ from AnalystStack.format import PythonFormatter, SQLFormatter
 def _format_python(file_path: str, lint: bool) -> None:
     """Lint or format a Python file (operates on the file's contents as a string)."""
     formatter = PythonFormatter()
-    with open(file_path, "r", encoding="utf-8") as f:
+    with open(file_path, encoding="utf-8") as f:
         raw_code = f.read()
 
     if lint:

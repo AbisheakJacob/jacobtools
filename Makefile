@@ -21,11 +21,12 @@ install:
 
 .PHONY: format
 format:
-	black src/AnalystStack test
+	ruff format src/AnalystStack test
 
 .PHONY: lint
 lint:
-	flake8 src/AnalystStack test
+# 	flake8 src/AnalystStack test
+	ruff check src/AnalystStack test --fix
 
 .PHONY: typecheck
 typecheck:
