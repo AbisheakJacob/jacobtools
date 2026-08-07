@@ -1,4 +1,5 @@
 import ast
+from typing import cast
 
 import black
 
@@ -39,7 +40,7 @@ class PythonFormatter:
                 code_string += "\n"
 
             formatted_code = black.format_str(code_string, mode=self.mode)
-            return formatted_code
+            return cast(str, formatted_code)
         except Exception as e:
             if e.__class__.__name__ == "NothingChanged":
                 logger.info("Code is already formatted.")
